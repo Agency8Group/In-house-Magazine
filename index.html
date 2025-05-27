@@ -212,7 +212,7 @@
                 >
                     In-House Magazine
                 </h1>
-                <!-- 우측 메뉴 -->
+                <!-- 우측: 다크모드/알림 -->
                 <div class="flex items-center gap-3">
                     <!-- 다크모드 토글 -->
                     <button
@@ -267,17 +267,6 @@
                         <span
                             class="absolute top-2 right-2 w-2 h-2 rounded-full bg-accent animate-pulse"
                         ></span>
-                    </button>
-                    <!-- 프로필 -->
-                    <button
-                        class="flex items-center gap-2 p-2 rounded-full bg-surface hover:bg-primary/10 transition shadow border border-border focus:outline-none btn-anim"
-                        title="내 정보"
-                    >
-                        <img
-                            src="https://i.pravatar.cc/40?img=3"
-                            alt="user"
-                            class="w-7 h-7 rounded-full"
-                        />
                     </button>
                 </div>
             </div>
@@ -570,8 +559,7 @@
                         >
                         <span
                             class="text-lg font-semibold mb-1 flex items-center gap-2"
-                        >
-                            드리미 상담포털
+                            >드리미 상담포털
                             <svg
                                 class="w-4 h-4 text-accent group-hover:translate-x-1 transition"
                                 fill="none"
@@ -597,8 +585,7 @@
                         >
                         <span
                             class="text-lg font-semibold mb-1 flex items-center gap-2"
-                        >
-                            대시보드(DEVELOP)
+                            >대시보드(DEVELOP)
                             <svg
                                 class="w-4 h-4 text-accent group-hover:translate-x-1 transition"
                                 fill="none"
@@ -624,8 +611,7 @@
                         >
                         <span
                             class="text-lg font-semibold mb-1 flex items-center gap-2"
-                        >
-                            사내 위키/문서함(DEVELOP)
+                            >사내 위키/문서함(DEVELOP)
                             <svg
                                 class="w-4 h-4 text-accent group-hover:translate-x-1 transition"
                                 fill="none"
@@ -643,7 +629,6 @@
                 </div>
             </section>
         </main>
-
         <!-- Footer -->
         <footer class="bg-white border-t border-border py-6 mt-8">
             <div
@@ -739,26 +724,17 @@
         </div>
 
         <script>
-            // fade-in observer for sections
-            const sections = document.querySelectorAll(".fade-section");
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting)
-                            entry.target.classList.add("visible");
-                    });
-                },
-                { threshold: 0.12 }
-            );
-            sections.forEach((section) => observer.observe(section));
+            // Section fade-in effect (버그 방지)
+            document.querySelectorAll(".fade-section").forEach((section) => {
+                section.classList.add("visible");
+            });
 
             // Accordion toggle
             function toggleAccordion(id) {
-                const el = document.getElementById(id);
-                el.classList.toggle("hidden");
+                document.getElementById(id).classList.toggle("hidden");
             }
 
-            // Nav highlight + h2 scroll
+            // Nav highlight + scroll
             document
                 .querySelectorAll("nav a[href^='#']")
                 .forEach((link, idx, arr) => {
@@ -784,11 +760,11 @@
             // h1(로고) 클릭시 맨 위로 이동
             document
                 .getElementById("mainLogo")
-                .addEventListener("click", function () {
+                .addEventListener("click", () => {
                     window.scrollTo({ top: 0, behavior: "smooth" });
                 });
 
-            // FAQ 챗봇 데이터
+            // FAQ 챗봇
             const faqList = [
                 {
                     q: "6월 워크숍 일정은 어떻게 되나요?",
@@ -807,7 +783,6 @@
                     a: "우측 하단 '궁금해요' 버튼을 눌러 챗봇 FAQ를 확인하거나, 관리자에게 문의해 주세요.",
                 },
             ];
-            // FAQ 챗봇
             const btn = document.getElementById("faqbotBtn");
             const popup = document.getElementById("faqbotPopup");
             const closeBtn = document.getElementById("faqbotClose");
@@ -836,7 +811,7 @@
                         '<div class="text-sm text-textSub px-2 py-5 text-center">검색 결과가 없습니다.</div>';
                     return;
                 }
-                filtered.forEach((item, idx) => {
+                filtered.forEach((item) => {
                     const wrap = document.createElement("div");
                     wrap.className =
                         "rounded-lg border border-border bg-surface group transition-all overflow-hidden card-anim";
@@ -844,7 +819,7 @@
                     btn.className =
                         "flex w-full items-center justify-between px-4 py-3 font-semibold text-left focus:outline-none text-textMain group-hover:bg-primary/5 transition btn-anim";
                     btn.innerHTML = `<span>${item.q}</span>
-          <svg class="w-4 h-4 ml-2 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>`;
+                    <svg class="w-4 h-4 ml-2 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>`;
                     btn.setAttribute("aria-expanded", "false");
                     btn.setAttribute("tabindex", "0");
                     const ans = document.createElement("div");
@@ -874,7 +849,7 @@
             renderFaq();
             document
                 .getElementById("faqSearch")
-                .addEventListener("input", function (e) {
+                .addEventListener("input", (e) => {
                     renderFaq(e.target.value.trim());
                 });
 
@@ -896,15 +871,15 @@
                 .addEventListener("click", function () {
                     if (document.getElementById("popup")) return;
                     const popupHtml = `<div id="popup" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-        <div class="glass rounded-2xl shadow-2xl p-7 max-w-sm w-[90vw] text-center border border-border animate-fadeUp">
-          <div class="flex items-center justify-center mb-2">
-            <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
-          </div>
-          <h2 class="text-lg font-bold mb-2 tracking-tight">공지사항</h2>
-          <p class="mb-4 text-textSub text-base">6월 워크숍 일정이 확정되었습니다.<br />참여 신청을 잊지 마세요!</p>
-          <button onclick="document.getElementById('popup').remove()" class="inline-block mt-1 px-6 py-2 rounded-full bg-primary hover:bg-primaryDark text-white font-semibold transition shadow btn-anim">닫기</button>
-        </div>
-      </div>`;
+                <div class="glass rounded-2xl shadow-2xl p-7 max-w-sm w-[90vw] text-center border border-border animate-fadeUp">
+                  <div class="flex items-center justify-center mb-2">
+                    <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+                  </div>
+                  <h2 class="text-lg font-bold mb-2 tracking-tight">공지사항</h2>
+                  <p class="mb-4 text-textSub text-base">6월 워크숍 일정이 확정되었습니다.<br />참여 신청을 잊지 마세요!</p>
+                  <button onclick="document.getElementById('popup').remove()" class="inline-block mt-1 px-6 py-2 rounded-full bg-primary hover:bg-primaryDark text-white font-semibold transition shadow btn-anim">닫기</button>
+                </div>
+            </div>`;
                     document.body.insertAdjacentHTML("beforeend", popupHtml);
                 });
         </script>
