@@ -231,7 +231,7 @@
                     >
                         <img
                             src="./img/eibebulogo.png"
-                            alt="버튼1 이미지"
+                            alt="Eibe 홈페이지 로고"
                             class="w-6 h-6"
                         />
                     </a>
@@ -244,7 +244,7 @@
                     >
                         <img
                             src="./img/dreamebulogo.svg"
-                            alt="버튼2 이미지"
+                            alt="Dreame 브랜드 로고"
                             class="w-6 h-6"
                         />
                     </a>
@@ -257,7 +257,7 @@
                     >
                         <img
                             src="./img/nutricia-bulogo.svg"
-                            alt="버튼3 이미지"
+                            alt="Nutricia 스토어 로고"
                             class="w-6 h-6"
                         />
                     </a>
@@ -493,7 +493,7 @@
                         <img
                             src="./img/img.sample"
                             class="object-cover w-full h-full group-hover:scale-105 group-hover:blur-[1.5px] transition-all duration-500"
-                            alt="포토1"
+                            alt="포토부스 사진 1"
                         />
                         <div
                             class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-white/60 transition-all duration-300"
@@ -510,7 +510,7 @@
                         <img
                             src="./img/img.sample"
                             class="object-cover w-full h-full group-hover:scale-105 group-hover:blur-[1.5px] transition-all duration-500"
-                            alt="포토2"
+                            alt="포토부스 사진 2"
                         />
                         <div
                             class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-white/60 transition-all duration-300"
@@ -527,7 +527,7 @@
                         <img
                             src="./img/img.sample"
                             class="object-cover w-full h-full group-hover:scale-105 group-hover:blur-[1.5px] transition-all duration-500"
-                            alt="포토3"
+                            alt="포토부스 사진 3"
                         />
                         <div
                             class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-white/60 transition-all duration-300"
@@ -884,7 +884,8 @@
                         if (accordion) accordion.classList.remove("hidden");
                     });
                 });
-            document.querySelector("nav .tab-link").classList.add("nav-active");
+            // 아래 부분 주석 처리 (초기 nav-active 기본 HTML에 있음)
+            // document.querySelector("nav .tab-link").classList.add("nav-active");
 
             // h1(로고) 클릭시 맨 위로 이동
             document
@@ -893,7 +894,7 @@
                     window.scrollTo({ top: 0, behavior: "smooth" });
                 });
 
-            // FAQ 챗봇
+            // FAQ 챗봇 데이터
             const faqList = [
                 {
                     q: "6월 워크숍 일정은 어떻게 되나요?",
@@ -933,7 +934,10 @@
                 if (filter)
                     filtered = faqList.filter(
                         (item) =>
-                            item.q.includes(filter) || item.a.includes(filter)
+                            item.q
+                                .toLowerCase()
+                                .includes(filter.toLowerCase()) ||
+                            item.a.toLowerCase().includes(filter.toLowerCase())
                     );
                 if (filtered.length === 0) {
                     $list.innerHTML =
