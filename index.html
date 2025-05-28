@@ -14,15 +14,18 @@
                 transition: 0.4s ease-in-out;
                 box-shadow: rgba(0, 0, 0, 0.4) 1px 2px 2px;
                 max-width: 300px;
-                margin: 100px auto;
+
+                /* 화면 정중앙 배치 */
                 position: fixed;
-                top: 10%;
-                left: 40%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
             }
             .form:hover {
-                transform: translateX(-0.5em) translateY(-0.5em);
+                transform: translate(calc(-50% - 0.5em), calc(-50% - 0.5em));
                 border: 1px solid #171717;
                 box-shadow: 10px 10px 0px #666666;
+                transition: transform 0.4s ease-in-out;
             }
             .heading {
                 color: black;
@@ -61,11 +64,12 @@
             }
             .btn:hover {
                 box-shadow: 6px 6px 0px #969696, -3px -3px 10px #ffffff;
-                transform: translateX(-0.5em) translateY(-0.5em);
+                transform: translate(calc(-0.5em), calc(-0.5em));
+                transition: transform 0.4s ease-in-out;
             }
             .btn:active {
                 transition: 0.2s;
-                transform: translateX(0em) translateY(0em);
+                transform: translate(0em, 0em);
                 box-shadow: none;
             }
         </style>
