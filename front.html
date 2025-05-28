@@ -958,21 +958,6 @@
             </div>`;
                     document.body.insertAdjacentHTML("beforeend", popupHtml);
                 });
-            // URL 쿼리 파라미터 추출 함수
-            const correctUsername = "eibe05";
-            const correctPassword = "202505";
-
-            window.addEventListener("DOMContentLoaded", () => {
-                // localStorage에서 로그인 정보 확인
-                const user = localStorage.getItem("loggedInUser");
-                const pw = localStorage.getItem("loggedInPassword");
-
-                if (user !== correctUsername || pw !== correctPassword) {
-                    alert("접근 권한이 없습니다. 로그인 페이지로 이동합니다.");
-                    window.location.href = "../index.html";
-                }
-                // 로그인 검증 성공 시 정상 페이지 로딩 유지
-            });
         </script>
     </body>
 </html>
