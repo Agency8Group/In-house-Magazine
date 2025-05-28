@@ -1,30 +1,36 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="In-House Magazine" />
-    <meta property="og:description" content="사내 매거진 공식 홈페이지입니다." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+        <!-- Open Graph -->
+        <meta property="og:title" content="In-House Magazine" />
+        <meta
+            property="og:description"
+            content="사내 매거진 공식 홈페이지입니다."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
 
-    <!-- Twitter Card도 같이 (fallback 용) -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="In-House Magazine" />
-    <meta name="twitter:description" content="사내 매거진 공식 홈페이지입니다." />
+        <!-- Twitter Card도 같이 (fallback 용) -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="In-House Magazine" />
+        <meta
+            name="twitter:description"
+            content="사내 매거진 공식 홈페이지입니다."
+        />
 
-    <!-- Favicon -->
-    <link rel="icon" href="./img/eibe.jpg" />
-    <link rel="apple-touch-icon" href="./img/eibe.jpg" />
+        <!-- Favicon -->
+        <link rel="icon" href="./img/eibe.jpg" />
+        <link rel="apple-touch-icon" href="./img/eibe.jpg" />
 
-    <title>사내 매거진</title>
+        <title>사내 매거진</title>
 
-    <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+        <!-- Tailwind -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
         <script>
             tailwind.config = {
                 theme: {
@@ -182,7 +188,7 @@
     <body
         class="bg-surface text-textMain font-sans transition-colors duration-200"
     >
-      <img src="./img/eibe.jpg" alt="대표 이미지" style="display:none;" />
+        <img src="./img/eibe.jpg" alt="대표 이미지" style="display: none" />
         <!-- 공지 팝업 -->
         <div
             id="popup"
@@ -205,8 +211,8 @@
                 </div>
                 <h2 class="text-lg font-bold mb-2 tracking-tight">공지사항</h2>
                 <p class="mb-4 text-textSub text-base">
-                    6월 워크숍 일정이 확정되었습니다..<br />참여 신청을 잊지
-                    마세요!
+                    6월 워크숍 일정이 확정되었습니다..<br />
+                    참여 신청을 잊지 마세요!
                 </p>
                 <button
                     onclick="document.getElementById('popup').remove()"
@@ -273,7 +279,6 @@
                         </svg>
                     </button>
                     <!-- 공지 알림 -->
-
                     <button
                         id="notificationBtn"
                         class="relative p-2 rounded-full bg-surface hover:bg-primary/10 transition shadow border border-border focus:outline-none btn-anim"
@@ -377,12 +382,13 @@
                                     viewBox="0 0 24 24"
                                 >
                                     <path d="M9 12l2 2l4-4" />
-                                </svg> </span
-                            >메신저 장애 복구
+                                </svg>
+                            </span>
+                            메신저 장애 복구
                         </h3>
                         <p class="text-textSub text-sm leading-relaxed">
-                            사내 메신저 서비스가 정상화되었습니다.<br />사용에
-                            참고 바랍니다.
+                            사내 메신저 서비스가 정상화되었습니다.<br />
+                            사용에 참고 바랍니다.
                         </p>
                     </div>
                     <div
@@ -402,8 +408,9 @@
                                     viewBox="0 0 24 24"
                                 >
                                     <circle cx="12" cy="12" r="9" />
-                                </svg> </span
-                            >식당 운영 변경
+                                </svg>
+                            </span>
+                            식당 운영 변경
                         </h3>
                         <p class="text-textSub text-sm leading-relaxed">
                             6월부터 주 3회 새로운 메뉴로 교체됩니다.
@@ -426,8 +433,9 @@
                                     viewBox="0 0 24 24"
                                 >
                                     <path d="M19 9l-7 7-7-7" />
-                                </svg> </span
-                            >진급인원 공유
+                                </svg>
+                            </span>
+                            진급인원 공유
                         </h3>
                         <p class="text-textSub text-sm leading-relaxed">
                             진급자 및 수상자 5층에서 발표예정
@@ -435,6 +443,7 @@
                     </div>
                 </div>
             </section>
+
             <!-- 포토부스 -->
             <section id="photobooth" class="fade-section">
                 <h2
@@ -516,6 +525,7 @@
                     </div>
                 </div>
             </section>
+
             <!-- Projects & Tools -->
             <section id="projects" class="fade-section">
                 <h2
@@ -620,6 +630,7 @@
                     </a>
                 </div>
             </section>
+
             <!-- 조직도 -->
             <section id="org" class="fade-section">
                 <h2
@@ -731,6 +742,7 @@
                 </div>
             </section>
         </main>
+
         <!-- Footer -->
         <footer class="bg-white border-t border-border py-6 mt-8">
             <div
