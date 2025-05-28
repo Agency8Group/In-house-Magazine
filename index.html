@@ -958,14 +958,13 @@
             </div>`;
                     document.body.insertAdjacentHTML("beforeend", popupHtml);
                 });
-            // URL 파라미터 가져오기 함수
-            // URL 파라미터 추출 함수
+            // URL 쿼리 파라미터 추출 함수
             function getQueryParam(name) {
                 return new URLSearchParams(window.location.search).get(name);
             }
 
             window.addEventListener("DOMContentLoaded", () => {
-                const correctUsername = "eibe05"; // 로그인 페이지와 동일하게 맞춰주세요
+                const correctUsername = "eibe05"; // 로그인 페이지와 동일하게 맞춤
                 const correctPassword = "202505";
 
                 const user = getQueryParam("user");
@@ -976,13 +975,18 @@
                         "접근 권한이 없습니다. 아이디 또는 비밀번호가 올바르지 않습니다."
                     );
 
+                    // 로그인 페이지 URL (로컬이나 원격 주소에 맞게 수정)
+                    const loginPageUrl =
+                        "https://your-login-page-url.example.com";
+
+                    // 이전 페이지가 없으면 로그인 페이지로 강제 이동
                     if (window.history.length > 1) {
                         window.history.back();
                     } else {
-                        window.location.href = "../index.html"; // 로그인 페이지 경로
+                        window.location.href = loginPageUrl;
                     }
                 }
-                // 맞으면 정상적으로 페이지 표시
+                // 로그인 검증 성공 시 여기서 정상 페이지 로딩 진행
             });
         </script>
     </body>
