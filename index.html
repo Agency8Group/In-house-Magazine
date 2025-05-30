@@ -2,13 +2,61 @@
 <html lang="ko">
     <head>
         <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <!-- Favicon -->
-        <link rel="icon" href="./img/eibe.jpg" />
+        <!-- Title & Description (ko/영문, 향후 교체 용이) -->
+        <title>사내 매거진 | In-House Magazine</title>
+        <meta
+            name="description"
+            content="최신 사내 소식, 프로젝트, 조직도, 비상연락처 등 실시간으로 확인하는 사내 매거진 플랫폼입니다."
+        />
+
+        <!-- Alternate Languages: hreflang (영문, 일본어 등 필요시 확장) -->
+        <link rel="alternate" href="https://YOURDOMAIN.com/ko" hreflang="ko" />
+        <link rel="alternate" href="https://YOURDOMAIN.com/en" hreflang="en" />
+        <!-- <link rel="alternate" href="https://YOURDOMAIN.com/ja" hreflang="ja" /> -->
+
+        <!-- favicon & App Icon (최신 표준) -->
+        <link rel="icon" href="./img/eibe.jpg" type="image/jpeg" />
         <link rel="apple-touch-icon" href="./img/eibe.jpg" />
 
-        <title>사내 매거진</title>
+        <!-- SEO: Canonical -->
+        <link rel="canonical" href="https://YOURDOMAIN.com/ko" />
+
+        <!-- Open Graph: Facebook/Linkedin/카카오 등 -->
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="ko_KR" />
+        <meta property="og:title" content="사내 매거진 | In-House Magazine" />
+        <meta
+            property="og:description"
+            content="실시간 사내 이슈, 프로젝트, 조직도, 비상연락처 안내 - In-House Magazine"
+        />
+        <meta property="og:url" content="https://YOURDOMAIN.com/ko" />
+        <meta
+            property="og:image"
+            content="https://YOURDOMAIN.com/img/eibe.jpg"
+        />
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="사내 매거진 | In-House Magazine" />
+        <meta
+            name="twitter:description"
+            content="실시간 사내 이슈, 프로젝트, 조직도, 비상연락처 안내 - In-House Magazine"
+        />
+        <meta
+            name="twitter:image"
+            content="https://YOURDOMAIN.com/img/eibe.jpg"
+        />
+
+        <!-- Internationalization: Multi-language 지원 (html lang, direction, 등) -->
+        <meta name="language" content="ko" />
+
+        <!-- Robots/SEO -->
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Eibe Team" />
+        <meta name="copyright" content="Eibe, All rights reserved" />
 
         <!-- Tailwind -->
         <script src="https://cdn.tailwindcss.com"></script>
@@ -173,7 +221,6 @@
                 color: #bfc2cc !important;
                 opacity: 1;
             }
-
             /* -- 모바일 메뉴용 추가 -- */
             .mobile-nav-overlay {
                 background: rgba(0, 0, 0, 0.32);
