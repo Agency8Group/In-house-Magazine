@@ -395,11 +395,21 @@
             /* 타이틀 호버 효과 */
             .title-hover-effect {
                 transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                background: linear-gradient(
+                    -45deg,
+                    #4957f3,
+                    #17c684,
+                    #2832a2,
+                    #4957f3
+                );
+                background-size: 400% 400%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
             }
 
             .title-hover-effect:hover {
                 transform: scale(1.02);
-                text-shadow: 0 0 30px rgba(73, 87, 243, 0.3);
             }
         </style>
     </head>
@@ -429,7 +439,7 @@
                 </div>
                 <h2 class="text-lg font-bold mb-2 tracking-tight">공지사항</h2>
                 <p class="mb-4 text-textSub text-base">
-                    6월 워크숍 일정이 확정되었습니다..<br />
+                    6월 워크숍 일정이 확정되었습니다.<br />
                     참여 신청을 잊지 마세요!
                 </p>
                 <button
@@ -668,7 +678,7 @@
                 <div class="relative z-10 text-center py-32 md:py-36">
                     <div class="max-w-4xl mx-auto">
                         <h1
-                            class="text-4xl md:text-6xl font-black tracking-tight mb-6 animate-fadeUp text-gradient-animation title-hover-effect"
+                            class="text-4xl md:text-6xl font-black tracking-tight mb-6 animate-fadeUp title-hover-effect"
                             style="
                                 line-height: 1.1;
                                 padding-bottom: 0.1em;
@@ -682,10 +692,10 @@
                             class="text-xl md:text-2xl text-textSub mb-8 leading-relaxed animate-fadeUp"
                             style="animation-delay: 0.2s"
                         >
-                            실시간 사내 소식과 프로젝트를 한눈에<br />
+                            사내 소식, 이슈, 프로젝트 소소하게 모아둔 곳<br />
                             <span class="text-primary font-semibold"
-                                >더 스마트한 업무 환경</span
-                            >을 경험하세요
+                                >가끔 들러보셔도 좋아요 :)</span
+                            >
                         </p>
                     </div>
                 </div>
