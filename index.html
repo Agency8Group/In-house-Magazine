@@ -427,20 +427,20 @@
             class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
         >
             <div
-                class="glass rounded-2xl shadow-2xl p-7 max-w-sm w-[90vw] text-center border border-border animate-fadeUp"
+                class="glass rounded-2xl shadow-2xl p-8 max-w-md w-[95vw] text-center border border-border animate-fadeUp"
             >
-                <div class="flex items-center justify-center mb-2">
-                    <svg
-                        class="w-8 h-8 text-primary"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                    >
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 8v4m0 4h.01" />
-                    </svg>
+                <!-- Lottie 애니메이션 추가 -->
+                <div class="flex justify-center mb-4">
+                    <dotlottie-player
+                        src="https://lottie.host/8cb11ff1-b77e-4f01-b51f-be8c3fc0be85/4G0BOskz5P.lottie"
+                        background="transparent"
+                        speed="1"
+                        style="width: 150px; height: 150px"
+                        loop
+                        autoplay
+                    ></dotlottie-player>
                 </div>
+
                 <h2 class="text-lg font-bold mb-2 tracking-tight">공지사항</h2>
                 <p class="mb-4 text-textSub text-base">
                     6월 워크숍 일정이 확정되었습니다.<br />
@@ -1857,9 +1857,17 @@
                 .addEventListener("click", function () {
                     if (document.getElementById("popup")) return;
                     const popupHtml = `<div id="popup" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-            <div class="glass rounded-2xl shadow-2xl p-7 max-w-sm w-[90vw] text-center border border-border animate-fadeUp">
-              <div class="flex items-center justify-center mb-2">
-                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+            <div class="glass rounded-2xl shadow-2xl p-8 max-w-md w-[95vw] text-center border border-border animate-fadeUp">
+              <!-- Lottie 애니메이션 추가 -->
+              <div class="flex justify-center mb-4">
+                <dotlottie-player
+                    src="https://lottie.host/8cb11ff1-b77e-4f01-b51f-be8c3fc0be85/4G0BOskz5P.lottie"
+                    background="transparent"
+                    speed="1"
+                    style="width: 150px; height: 150px;"
+                    loop
+                    autoplay
+                ></dotlottie-player>
               </div>
               <h2 class="text-lg font-bold mb-2 tracking-tight">공지사항</h2>
               <p class="mb-4 text-textSub text-base">6월 워크숍 일정이 확정되었습니다.<br />참여 신청을 잊지 마세요!</p>
