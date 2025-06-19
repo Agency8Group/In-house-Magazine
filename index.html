@@ -134,6 +134,10 @@
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Noto+Sans+KR:wght@400;700&display=swap"
             rel="stylesheet"
         />
+        <script
+            src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+            type="module"
+        ></script>
         <style>
             html {
                 scroll-behavior: smooth;
@@ -675,7 +679,7 @@
         <main class="max-w-5xl mx-auto px-4 md:px-0 pt-6 pb-16 space-y-20">
             <!-- 히어로 섹션 추가 -->
             <section class="fade-section relative overflow-hidden">
-                <div class="relative z-10 text-center py-32 md:py-36">
+                <div class="relative z-10 text-center py-42 md:py-46">
                     <div class="max-w-4xl mx-auto">
                         <h1
                             class="text-4xl md:text-6xl font-black tracking-tight mb-6 animate-fadeUp title-hover-effect"
@@ -688,6 +692,22 @@
                         >
                             In-House Magazine
                         </h1>
+
+                        <!-- Lottie 애니메이션 추가 -->
+                        <div
+                            class="flex justify-center mb-6 animate-fadeUp"
+                            style="animation-delay: 0.3s"
+                        >
+                            <dotlottie-player
+                                src="https://lottie.host/c96f51a1-140e-4f46-a4bf-c25bdb6d8051/yLHmBrZ02n.lottie"
+                                background="transparent"
+                                speed="1"
+                                style="width: 340px; height: 340px"
+                                loop
+                                autoplay
+                            ></dotlottie-player>
+                        </div>
+
                         <p
                             class="text-xl md:text-2xl text-textSub mb-8 leading-relaxed animate-fadeUp"
                             style="animation-delay: 0.2s"
@@ -697,6 +717,65 @@
                                 >가끔 들러보셔도 좋아요 :)</span
                             >
                         </p>
+
+                        <!-- 통계 카드들을 히어로 섹션 안으로 이동 -->
+                        <div
+                            class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto animate-fadeUp"
+                            style="animation-delay: 0.6s"
+                        >
+                            <div
+                                class="glass rounded-xl p-4 text-center border border-border shadow-card floating-animation"
+                                style="animation-delay: 0s"
+                            >
+                                <div
+                                    class="text-2xl font-bold text-primary mb-1"
+                                >
+                                    5+
+                                </div>
+                                <div class="text-sm text-textSub">
+                                    진행 프로젝트
+                                </div>
+                            </div>
+                            <div
+                                class="glass rounded-xl p-4 text-center border border-border shadow-card floating-animation"
+                                style="animation-delay: 0.5s"
+                            >
+                                <div
+                                    class="text-2xl font-bold text-accent mb-1"
+                                >
+                                    24/7
+                                </div>
+                                <div class="text-sm text-textSub">
+                                    실시간 모니터링
+                                </div>
+                            </div>
+                            <div
+                                class="glass rounded-xl p-4 text-center border border-border shadow-card floating-animation"
+                                style="animation-delay: 1s"
+                            >
+                                <div
+                                    class="text-2xl font-bold text-primaryDark mb-1"
+                                >
+                                    100%
+                                </div>
+                                <div class="text-sm text-textSub">
+                                    반응형 지원
+                                </div>
+                            </div>
+                            <div
+                                class="glass rounded-xl p-4 text-center border border-border shadow-card floating-animation"
+                                style="animation-delay: 1.5s"
+                            >
+                                <div
+                                    class="text-2xl font-bold text-primary mb-1"
+                                >
+                                    ∞
+                                </div>
+                                <div class="text-sm text-textSub">
+                                    확장 가능
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -715,49 +794,6 @@
                         class="absolute top-1/2 left-1/4 w-24 h-24 bg-primaryDark/10 rounded-full blur-2xl animate-pulse"
                         style="animation-delay: 2s"
                     ></div>
-                </div>
-
-                <!-- 통계 카드들 -->
-                <div
-                    class="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-4 mt-20 max-w-4xl mx-auto animate-fadeUp"
-                    style="animation-delay: 0.6s"
-                >
-                    <div
-                        class="glass rounded-xl p-4 text-center border border-border shadow-card floating-animation"
-                        style="animation-delay: 0s"
-                    >
-                        <div class="text-2xl font-bold text-primary mb-1">
-                            0+
-                        </div>
-                        <div class="text-sm text-textSub">진행 프로젝트</div>
-                    </div>
-                    <div
-                        class="glass rounded-xl p-4 text-center border border-border shadow-card floating-animation"
-                        style="animation-delay: 0.5s"
-                    >
-                        <div class="text-2xl font-bold text-accent mb-1">
-                            2+
-                        </div>
-                        <div class="text-sm text-textSub">실시간 모니터링</div>
-                    </div>
-                    <div
-                        class="glass rounded-xl p-4 text-center border border-border shadow-card floating-animation"
-                        style="animation-delay: 1s"
-                    >
-                        <div class="text-2xl font-bold text-primaryDark mb-1">
-                            100%
-                        </div>
-                        <div class="text-sm text-textSub">반응형 지원</div>
-                    </div>
-                    <div
-                        class="glass rounded-xl p-4 text-center border border-border shadow-card floating-animation"
-                        style="animation-delay: 1.5s"
-                    >
-                        <div class="text-2xl font-bold text-primary mb-1">
-                            ∞
-                        </div>
-                        <div class="text-sm text-textSub">확장 가능</div>
-                    </div>
                 </div>
             </section>
 
