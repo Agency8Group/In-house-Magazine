@@ -510,6 +510,17 @@
                             class="w-6 h-6"
                         />
                     </a>
+                    <a
+                        href="https://brightonmall.co.kr/?utm_source=google&utm_medium=sa&utm_campaign=pc&utm_content=brand_checked_main&utm_term=%EB%B8%8C%EB%9D%BC%EC%9D%B4%ED%8A%BC%EB%AA%B0&gad_source=1&gad_campaignid=22371354396&gbraid=0AAAAA_HbwrYQF5JQjH-vQt0ivyh1RY9lz&gclid=Cj0KCQjwjdTCBhCLARIsAEu8bpI_DuvREPWuDTSViv535X6u5VlRtqdWQqrlQsMSD-7pGWq_rnQVYQgaAipCEALw_wcB"
+                        target="_blank"
+                        class="helf hidden sm:flex items-center gap-2 p-2 border border-border rounded hover:bg-primary/10 transition shadow"
+                    >
+                        <img
+                            src="./img/channels4_profile.jpg"
+                            alt="Brighton Mall 로고"
+                            class="w-6 h-6 rounded-full"
+                        />
+                    </a>
                     <!-- 다크모드 토글 -->
                     <button
                         id="darkToggle"
@@ -541,28 +552,6 @@
                                 d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
                             />
                         </svg>
-                    </button>
-                    <!-- 공지 알림 -->
-                    <button
-                        id="notificationBtn"
-                        class="relative p-2 rounded-full bg-surface hover:bg-primary/10 transition shadow border border-border focus:outline-none btn-anim"
-                        title="공지/알림"
-                    >
-                        <svg
-                            class="w-6 h-6"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"
-                            />
-                            <path d="M13.73 21a2 2 0 01-3.46 0" />
-                        </svg>
-                        <span
-                            class="absolute top-2 right-2 w-2 h-2 rounded-full bg-accent animate-pulse"
-                        ></span>
                     </button>
                     <!-- 햄버거 (모바일) -->
                     <button
@@ -711,7 +700,7 @@
                                 src="https://lottie.host/c96f51a1-140e-4f46-a4bf-c25bdb6d8051/yLHmBrZ02n.lottie"
                                 background="transparent"
                                 speed="1"
-                                style="width: 600px; height: 380px"
+                                style="width: 600px; height: 420px"
                                 loop
                                 autoplay
                             ></dotlottie-player>
@@ -1966,32 +1955,6 @@
                 moonIcon.style.display = dark ? "none" : "block";
                 sunIcon.style.display = dark ? "block" : "none";
             });
-
-            // 알림 클릭시 공지 팝업 재노출
-            document
-                .getElementById("notificationBtn")
-                .addEventListener("click", function () {
-                    if (document.getElementById("popup")) return;
-                    const popupHtml = `<div id="popup" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-            <div class="glass rounded-2xl shadow-2xl p-8 max-w-md w-[95vw] text-center border border-border animate-fadeUp">
-              <!-- Lottie 애니메이션 추가 -->
-              <div class="flex justify-center mb-4">
-                <dotlottie-player
-                    src="https://lottie.host/8cb11ff1-b77e-4f01-b51f-be8c3fc0be85/4G0BOskz5P.lottie"
-                    background="transparent"
-                    speed="1"
-                    style="width: 150px; height: 150px;"
-                    loop
-                    autoplay
-                ></dotlottie-player>
-              </div>
-              <h2 class="text-lg font-bold mb-2 tracking-tight">공지사항</h2>
-              <p class="mb-4 text-textSub text-base">6월 워크숍 일정이 확정되었습니다.<br />참여 신청을 잊지 마세요!</p>
-              <button onclick="document.getElementById('popup').remove()" class="inline-block mt-1 px-6 py-2 rounded-full bg-primary hover:bg-primaryDark text-white font-semibold transition shadow btn-anim">닫기</button>
-            </div>
-        </div>`;
-                    document.body.insertAdjacentHTML("beforeend", popupHtml);
-                });
 
             // ===== 모바일 네비게이션 =====
             const hamburgerBtn = document.getElementById("hamburgerBtn");
