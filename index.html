@@ -607,6 +607,23 @@
             .dark .dark-toggle-container {
                 filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
             }
+
+            /* 개선된 스크롤 마진 (모바일 대응) */
+            .scroll-mt-28 {
+                scroll-margin-top: 7rem; /* 112px - 데스크톱 */
+            }
+
+            @media (max-width: 768px) {
+                .scroll-mt-28 {
+                    scroll-margin-top: 8rem; /* 128px - 모바일 */
+                }
+            }
+
+            @media (max-width: 480px) {
+                .scroll-mt-28 {
+                    scroll-margin-top: 9rem; /* 144px - 작은 모바일 */
+                }
+            }
         </style>
     </head>
     <body
@@ -2201,7 +2218,23 @@
         </div>
 
         <script>
-            // 성능 최적화를 위한 디바운스 함수
+            // ===== 전역 변수 선언 =====
+            const navLinks = document.querySelectorAll("nav a[href^='#']");
+            const mainLogo = document.getElementById("mainLogo");
+            const hamburgerBtn = document.getElementById("hamburgerBtn");
+            const mobileNavPanel = document.getElementById("mobileNavPanel");
+            const mobileNavOverlay =
+                document.getElementById("mobileNavOverlay");
+            const mobileNavClose = document.getElementById("mobileNavClose");
+            const mobileLinks = mobileNavPanel.querySelectorAll("a");
+            const darkToggleBtn = document.getElementById("darkToggle");
+            const btn = document.getElementById("faqbotBtn");
+            const popup = document.getElementById("faqbotPopup");
+            const closeBtn = document.getElementById("faqbotClose");
+
+            let photoboothSwiper = null;
+
+            // ===== 성능 최적화를 위한 디바운스 함수 =====
             function debounce(func, wait) {
                 let timeout;
                 return function executedFunction(...args) {
@@ -2214,18 +2247,40 @@
                 };
             }
 
-            // Section fade-in effect (버그 방지)
+            // ===== Section fade-in effect =====
             document.querySelectorAll(".fade-section").forEach((section) => {
                 section.classList.add("visible");
             });
 
-            // Accordion toggle function
+            // ===== Accordion toggle function =====
             function toggleAccordion(id) {
                 document.getElementById(id).classList.toggle("hidden");
             }
 
-            // Nav highlight + scroll with manual scroll offset handling for anchors
-            const navLinks = document.querySelectorAll("nav a[href^='#']");
+            // ===== 개선된 스크롤 함수 =====
+            function smoothScrollToSection(targetId) {
+                // 먼저 섹션 자체를 찾기
+                const section = document.getElementById(targetId);
+
+                if (section) {
+                    // 실제 헤더 높이 계산
+                    const header = document.querySelector("header");
+                    const headerHeight = header ? header.offsetHeight : 100;
+
+                    // 더 정확한 스크롤 위치 계산
+                    const elementTop = section.offsetTop;
+                    const offsetPosition = elementTop - headerHeight - 20; // 20px 추가 여백
+
+                    window.scrollTo({
+                        top: Math.max(0, offsetPosition),
+                        behavior: "smooth",
+                    });
+                } else {
+                    console.warn(`Section with id "${targetId}" not found`);
+                }
+            }
+
+            // ===== PC 네비게이션 =====
             navLinks.forEach((link, idx, arr) => {
                 link.addEventListener("click", (e) => {
                     e.preventDefault();
@@ -2238,24 +2293,8 @@
                     // Extract target ID from href (without #)
                     const targetId = link.getAttribute("href").substring(1);
 
-                    // Try to get title element first, if exists; else the section itself
-                    const h2 = document.getElementById(`${targetId}-title`);
-                    const section = document.getElementById(targetId);
-
-                    // 네비 클릭 시에만 offset 적용
-                    const headerOffset = 90;
-                    const element = h2 || section;
-                    if (element) {
-                        const elementPosition =
-                            element.getBoundingClientRect().top +
-                            window.pageYOffset;
-                        const offsetPosition = elementPosition - headerOffset;
-
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: "smooth",
-                        });
-                    }
+                    // 개선된 스크롤 함수 사용
+                    smoothScrollToSection(targetId);
 
                     // If the section has an accordion, open it (remove hidden)
                     const accordion = document.getElementById(
@@ -2265,32 +2304,72 @@
                 });
             });
 
-            // 첫 진입 시(새로고침, 직접 URL 입력)에는 offset 없이 자연스럽게 보이도록
-            window.addEventListener("DOMContentLoaded", () => {
-                if (window.location.hash) {
-                    const targetId = window.location.hash.replace("#", "");
-                    const h2 = document.getElementById(`${targetId}-title`);
-                    const section = document.getElementById(targetId);
-                    const element = h2 || section;
-                    if (element) {
-                        element.scrollIntoView({
-                            behavior: "auto",
-                            block: "start",
-                        });
-                    }
-                }
+            // ===== 모바일 네비게이션 =====
+            hamburgerBtn.addEventListener("click", () => {
+                mobileNavPanel.classList.add("open");
+                mobileNavPanel.classList.remove("hidden");
+                mobileNavOverlay.classList.remove("hidden");
+                document.body.style.overflow = "hidden";
             });
 
-            // h1(로고) 클릭시 맨 위로 부드럽게 이동
-            const mainLogo = document.getElementById("mainLogo");
+            function closeMobileNav() {
+                mobileNavPanel.classList.remove("open");
+                setTimeout(() => {
+                    mobileNavPanel.classList.add("hidden");
+                    mobileNavOverlay.classList.add("hidden");
+                    document.body.style.overflow = "";
+                }, 320);
+            }
+
+            mobileNavClose.addEventListener("click", closeMobileNav);
+            mobileNavOverlay.addEventListener("click", closeMobileNav);
+
+            mobileLinks.forEach((link) => {
+                link.addEventListener("click", (e) => {
+                    e.preventDefault();
+
+                    // nav-active 갱신
+                    mobileLinks.forEach((a) =>
+                        a.classList.remove("nav-active")
+                    );
+                    link.classList.add("nav-active");
+
+                    // 모바일 메뉴 닫기
+                    closeMobileNav();
+
+                    // 스크롤 이동 (메뉴가 닫힌 후 실행)
+                    const targetId = link.getAttribute("href").substring(1);
+
+                    setTimeout(() => {
+                        smoothScrollToSection(targetId);
+
+                        // 아코디언 자동 열림
+                        const accordion = document.getElementById(
+                            targetId + "Accordion"
+                        );
+                        if (accordion) accordion.classList.remove("hidden");
+                    }, 350); // 메뉴 닫힘 애니메이션 완료 후 실행
+                });
+            });
+
+            // ===== 로고 클릭 시 맨 위로 이동 =====
             if (mainLogo) {
                 mainLogo.addEventListener("click", () => {
                     window.scrollTo({ top: 0, behavior: "smooth" });
                 });
             }
 
-            // FAQ 챗봇 데이터
-            // FAQ 챗봇 데이터
+            // ===== 첫 진입 시 해시 처리 =====
+            window.addEventListener("DOMContentLoaded", () => {
+                if (window.location.hash) {
+                    const targetId = window.location.hash.replace("#", "");
+                    setTimeout(() => {
+                        smoothScrollToSection(targetId);
+                    }, 100);
+                }
+            });
+
+            // ===== FAQ 챗봇 데이터 =====
             const faqList = [
                 {
                     q: "컴퓨터가 이상해요.<br>누구에게 요청해야 하나요?",
@@ -2310,10 +2389,7 @@
                 },
             ];
 
-            const btn = document.getElementById("faqbotBtn");
-            const popup = document.getElementById("faqbotPopup");
-            const closeBtn = document.getElementById("faqbotClose");
-
+            // ===== FAQ 챗봇 이벤트 =====
             btn.addEventListener("click", () => {
                 popup.classList.toggle("hidden");
                 if (!popup.classList.contains("hidden"))
@@ -2328,7 +2404,7 @@
                 if (e.key === "Escape") popup.classList.add("hidden");
             });
 
-            // Render FAQ list with filtering by keyword
+            // ===== FAQ 렌더링 함수 =====
             function renderFaq(filter = "") {
                 const $list = document.getElementById("faqList");
                 $list.innerHTML = "";
@@ -2390,9 +2466,7 @@
                     renderFaq(e.target.value.trim());
                 });
 
-            // Enhanced 다크모드 토글 (정리된 버전)
-            const darkToggleBtn = document.getElementById("darkToggle");
-
+            // ===== 다크모드 토글 =====
             // Ripple effect function
             function createRipple(event) {
                 const button = event.currentTarget;
@@ -2446,7 +2520,6 @@
                     // 저장된 설정이 없거나 라이트모드면 라이트모드로 시작
                     document.documentElement.classList.remove("dark");
                     darkToggleBtn.classList.remove("dark");
-                    // localStorage에 강제로 저장하지 않음
                 }
             }
 
@@ -2468,24 +2541,7 @@
                     }
                 });
 
-            // ===== 모바일 네비게이션 =====
-            const hamburgerBtn = document.getElementById("hamburgerBtn");
-            const mobileNavPanel = document.getElementById("mobileNavPanel");
-            const mobileNavOverlay =
-                document.getElementById("mobileNavOverlay");
-            const mobileNavClose = document.getElementById("mobileNavClose");
-            const mobileLinks = mobileNavPanel.querySelectorAll("a");
-
-            hamburgerBtn.addEventListener("click", () => {
-                mobileNavPanel.classList.add("open");
-                mobileNavPanel.classList.remove("hidden");
-                mobileNavOverlay.classList.remove("hidden");
-                document.body.style.overflow = "hidden";
-            });
-
             // ===== 포토부스 Swiper 캐러셀 =====
-            let photoboothSwiper = null;
-
             // Swiper 초기화 함수
             function initPhotoboothSwiper() {
                 if (typeof Swiper !== "undefined") {
@@ -2539,7 +2595,6 @@
                         autoHeight: false,
                         setWrapperSize: true,
                         virtualTranslate: false,
-                        effect: "slide",
                         fadeEffect: {
                             crossFade: false,
                         },
@@ -2597,49 +2652,6 @@
             } else {
                 initPhotoboothSwiper();
             }
-
-            function closeMobileNav() {
-                mobileNavPanel.classList.remove("open");
-                setTimeout(() => {
-                    mobileNavPanel.classList.add("hidden");
-                    mobileNavOverlay.classList.add("hidden");
-                    document.body.style.overflow = "";
-                }, 320);
-            }
-            mobileNavClose.addEventListener("click", closeMobileNav);
-            mobileNavOverlay.addEventListener("click", closeMobileNav);
-            mobileLinks.forEach((link) => {
-                link.addEventListener("click", (e) => {
-                    closeMobileNav();
-                    // nav-active 갱신
-                    mobileLinks.forEach((a) =>
-                        a.classList.remove("nav-active")
-                    );
-                    link.classList.add("nav-active");
-                    // 스크롤 이동(기존 PC nav 스크립트와 동일하게!)
-                    e.preventDefault();
-                    const targetId = link.getAttribute("href").substring(1);
-                    const h2 = document.getElementById(`${targetId}-title`);
-                    const section = document.getElementById(targetId);
-                    const headerOffset = 90;
-                    const element = h2 || section;
-                    if (element) {
-                        const elementPosition =
-                            element.getBoundingClientRect().top +
-                            window.pageYOffset;
-                        const offsetPosition = elementPosition - headerOffset;
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: "smooth",
-                        });
-                    }
-                    // 아코디언 자동 열림
-                    const accordion = document.getElementById(
-                        targetId + "Accordion"
-                    );
-                    if (accordion) accordion.classList.remove("hidden");
-                });
-            });
         </script>
     </body>
 </html>
