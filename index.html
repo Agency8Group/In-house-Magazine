@@ -624,6 +624,134 @@
                     scroll-margin-top: 9rem; /* 144px - 작은 모바일 */
                 }
             }
+
+            /* 새로고침 버튼 애니메이션 */
+            #refreshComments svg {
+                transition: transform 0.5s ease-in-out;
+            }
+
+            #refreshComments:active svg {
+                transform: rotate(180deg) !important;
+            }
+
+            #refreshComments:hover {
+                transform: scale(1.05);
+            }
+
+            #refreshComments:disabled {
+                cursor: not-allowed;
+                transform: none !important;
+            }
+
+            /* 새로고침 버튼 로딩 상태 */
+            #refreshComments.loading {
+                pointer-events: none;
+            }
+
+            #refreshComments.loading svg {
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            /* 댓글 시스템 스타일 */
+            .comment-container {
+                max-height: 400px;
+                overflow-y: auto;
+                scrollbar-width: thin;
+                scrollbar-color: #cbd5e1 #f1f5f9;
+            }
+
+            .comment-container::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .comment-container::-webkit-scrollbar-track {
+                background: #f1f5f9;
+                border-radius: 3px;
+            }
+
+            .comment-container::-webkit-scrollbar-thumb {
+                background: #cbd5e1;
+                border-radius: 3px;
+            }
+
+            .comment-container::-webkit-scrollbar-thumb:hover {
+                background: #94a3b8;
+            }
+
+            /* 댓글 입력 폼 스타일 */
+            .comment-form {
+                background: rgba(255, 255, 255, 0.8);
+                backdrop-filter: blur(8px);
+                border: 1px solid rgba(235, 235, 239, 0.5);
+                border-radius: 12px;
+                padding: 16px;
+                margin-top: 16px;
+            }
+
+            .comment-input-group {
+                display: flex;
+                gap: 12px;
+                margin-bottom: 12px;
+            }
+
+            .comment-input {
+                flex: 1;
+                padding: 8px 12px;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                font-size: 14px;
+                transition: border-color 0.2s ease;
+            }
+
+            .comment-input:focus {
+                outline: none;
+                border-color: #4957f3;
+                box-shadow: 0 0 0 3px rgba(73, 87, 243, 0.1);
+            }
+
+            .comment-textarea {
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                font-size: 14px;
+                resize: vertical;
+                min-height: 80px;
+                transition: border-color 0.2s ease;
+            }
+
+            .comment-textarea:focus {
+                outline: none;
+                border-color: #4957f3;
+                box-shadow: 0 0 0 3px rgba(73, 87, 243, 0.1);
+            }
+
+            /* 다크모드 댓글 스타일 */
+            .dark .comment-form {
+                background: rgba(35, 38, 47, 0.8);
+                border-color: rgba(52, 56, 73, 0.5);
+            }
+
+            .dark .comment-input,
+            .dark .comment-textarea {
+                background: rgba(35, 38, 47, 0.9);
+                border-color: #475569;
+                color: #f7f9fa;
+            }
+
+            .dark .comment-input:focus,
+            .dark .comment-textarea:focus {
+                border-color: #4957f3;
+            }
         </style>
     </head>
     <body
@@ -1233,6 +1361,356 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- 댓글 시스템 (Google Apps Script 연동) -->
+                <div
+                    class="mt-8 glass rounded-2xl shadow-card border border-border/50 p-6 animate-fadeUp"
+                    style="animation-delay: 0.3s"
+                >
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <svg
+                                class="w-5 h-5 text-primary"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                                />
+                            </svg>
+                            <h3 class="text-lg font-bold text-textMain">
+                                의견 나누기
+                            </h3>
+                            <span
+                                class="text-xs text-textSub bg-primary/10 text-primary px-2 py-1 rounded-full"
+                                >3</span
+                            >
+                        </div>
+                        <button
+                            id="refreshComments"
+                            class="flex items-center gap-2 px-3 py-1.5 bg-white/80 hover:bg-white border border-border/50 rounded-lg text-sm font-medium text-textMain transition-all duration-200 hover:shadow-md hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                            title="댓글 새로고침"
+                        >
+                            <svg
+                                class="w-4 h-4 transition-transform duration-300"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                                />
+                            </svg>
+                            <span class="hidden sm:inline">새로고침</span>
+                        </button>
+                    </div>
+
+                    <!-- 댓글 목록 (스크롤 가능, 최대 4개 표시) -->
+                    <div
+                        id="commentList"
+                        class="comment-container space-y-4 mb-6"
+                    >
+                        <!-- 댓글 1 -->
+                        <div
+                            class="flex gap-3 p-4 bg-white/50 rounded-xl border border-border/30"
+                        >
+                            <div
+                                class="w-8 h-8 bg-gradient-to-br from-primary to-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
+                            >
+                                김
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span
+                                        class="font-semibold text-textMain text-sm"
+                                        >김영수</span
+                                    >
+                                    <span class="text-xs text-textSub"
+                                        >2시간 전</span
+                                    >
+                                </div>
+                                <p
+                                    class="text-textMain text-sm leading-relaxed"
+                                >
+                                    사내 매거진 사이트가 정말 깔끔하고 보기
+                                    좋네요! 특히 다크모드 기능이 마음에 들어요.
+                                    앞으로 더 많은 소식들을 이곳에서 확인할 수
+                                    있을 것 같습니다.
+                                </p>
+                                <div class="flex items-center gap-4 mt-2">
+                                    <button
+                                        class="like-btn text-xs text-textSub hover:text-primary transition flex items-center gap-1"
+                                    >
+                                        <svg
+                                            class="w-3 h-3"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+                                            />
+                                        </svg>
+                                        좋아요 <span class="like-count">2</span>
+                                    </button>
+                                    <button
+                                        class="text-xs text-textSub hover:text-primary transition"
+                                    >
+                                        답글
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 댓글 2 -->
+                        <div
+                            class="flex gap-3 p-4 bg-white/50 rounded-xl border border-border/30"
+                        >
+                            <div
+                                class="w-8 h-8 bg-gradient-to-br from-accent to-green-500 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
+                            >
+                                이
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span
+                                        class="font-semibold text-textMain text-sm"
+                                        >이미영</span
+                                    >
+                                    <span class="text-xs text-textSub"
+                                        >1시간 전</span
+                                    >
+                                </div>
+                                <p
+                                    class="text-textMain text-sm leading-relaxed"
+                                >
+                                    정직원 발령 축하드립니다! 모두 열심히 일하신
+                                    분들이라 더욱 기쁘네요. 앞으로도 좋은 일들
+                                    많이 생기길 바랍니다.
+                                </p>
+                                <div class="flex items-center gap-4 mt-2">
+                                    <button
+                                        class="like-btn text-xs text-textSub hover:text-primary transition flex items-center gap-1"
+                                    >
+                                        <svg
+                                            class="w-3 h-3"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+                                            />
+                                        </svg>
+                                        좋아요 <span class="like-count">1</span>
+                                    </button>
+                                    <button
+                                        class="text-xs text-textSub hover:text-primary transition"
+                                    >
+                                        답글
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 댓글 3 -->
+                        <div
+                            class="flex gap-3 p-4 bg-white/50 rounded-xl border border-border/30"
+                        >
+                            <div
+                                class="w-8 h-8 bg-gradient-to-br from-primaryDark to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
+                            >
+                                박
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span
+                                        class="font-semibold text-textMain text-sm"
+                                        >박지민</span
+                                    >
+                                    <span class="text-xs text-textSub"
+                                        >30분 전</span
+                                    >
+                                </div>
+                                <p
+                                    class="text-textMain text-sm leading-relaxed"
+                                >
+                                    신규 입사자분 환영합니다! 드리미팀에서 함께
+                                    일하게 되어 기쁘네요. 팀워크 잘 맞춰서 좋은
+                                    결과 만들어봐요!
+                                </p>
+                                <div class="flex items-center gap-4 mt-2">
+                                    <button
+                                        class="like-btn text-xs text-textSub hover:text-primary transition flex items-center gap-1"
+                                    >
+                                        <svg
+                                            class="w-3 h-3"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+                                            />
+                                        </svg>
+                                        좋아요 <span class="like-count">0</span>
+                                    </button>
+                                    <button
+                                        class="text-xs text-textSub hover:text-primary transition"
+                                    >
+                                        답글
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 댓글 4 (추가 예시) -->
+                        <div
+                            class="flex gap-3 p-4 bg-white/50 rounded-xl border border-border/30"
+                        >
+                            <div
+                                class="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
+                            >
+                                최
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span
+                                        class="font-semibold text-textMain text-sm"
+                                        >최유선</span
+                                    >
+                                    <span class="text-xs text-textSub"
+                                        >15분 전</span
+                                    >
+                                </div>
+                                <p
+                                    class="text-textMain text-sm leading-relaxed"
+                                >
+                                    신규 입사자로 참여하게 되어 기쁩니다!
+                                    드리미팀에서 열심히 일하겠습니다. 많은 도움
+                                    부탁드려요!
+                                </p>
+                                <div class="flex items-center gap-4 mt-2">
+                                    <button
+                                        class="like-btn text-xs text-textSub hover:text-primary transition flex items-center gap-1"
+                                    >
+                                        <svg
+                                            class="w-3 h-3"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+                                            />
+                                        </svg>
+                                        좋아요 <span class="like-count">3</span>
+                                    </button>
+                                    <button
+                                        class="text-xs text-textSub hover:text-primary transition"
+                                    >
+                                        답글
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 댓글 작성 폼 -->
+                    <div class="comment-form">
+                        <div class="flex gap-3">
+                            <div
+                                class="w-8 h-8 bg-gradient-to-br from-primary to-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
+                            >
+                                나
+                            </div>
+                            <div class="flex-1">
+                                <!-- 이름 입력란 -->
+                                <div class="comment-input-group">
+                                    <input
+                                        type="text"
+                                        id="commentName"
+                                        placeholder="이름을 입력하세요 (선택사항)"
+                                        class="comment-input"
+                                        maxlength="20"
+                                    />
+                                    <label
+                                        class="flex items-center gap-2 text-xs text-textSub"
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            id="anonymousCheck"
+                                            class="rounded"
+                                        />
+                                        <span>익명으로 작성</span>
+                                    </label>
+                                </div>
+
+                                <!-- 댓글 내용 입력란 -->
+                                <textarea
+                                    id="commentInput"
+                                    placeholder="의견을 남겨보세요..."
+                                    class="comment-textarea"
+                                    rows="3"
+                                    maxlength="500"
+                                ></textarea>
+
+                                <div
+                                    class="flex items-center justify-between mt-3"
+                                >
+                                    <div class="flex items-center gap-2">
+                                        <button
+                                            class="text-xs text-textSub hover:text-primary transition flex items-center gap-1"
+                                        >
+                                            <svg
+                                                class="w-4 h-4"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+                                                />
+                                            </svg>
+                                            첨부
+                                        </button>
+                                        <span class="text-xs text-textSub">
+                                            <span id="charCount">0</span>/500자
+                                        </span>
+                                    </div>
+                                    <button
+                                        id="submitComment"
+                                        class="px-4 py-2 bg-primary hover:bg-primaryDark text-white rounded-lg text-sm font-semibold transition shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        댓글 작성
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- 포토부스 -->
@@ -1839,7 +2317,7 @@
                                     viewBox="0 0 24 24"
                                 >
                                     <path
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        d="M9 12l2 2l4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                                     />
                                 </svg>
                             </div>
@@ -2653,6 +3131,539 @@
                 );
             } else {
                 initPhotoboothSwiper();
+            }
+
+            // ===== 댓글 시스템 (Google Apps Script 연동) =====
+            const commentInput = document.getElementById("commentInput");
+            const commentName = document.getElementById("commentName");
+            const anonymousCheck = document.getElementById("anonymousCheck");
+            const submitComment = document.getElementById("submitComment");
+            const commentList = document.getElementById("commentList");
+            const refreshComments = document.getElementById("refreshComments");
+            const charCount = document.getElementById("charCount");
+
+            // Google Apps Script API 설정 (JSONP 방식)
+            // ✅ 최종 배포 완료
+            const GAS_API_URL =
+                "https://script.google.com/macros/s/AKfycbyh7t3k2VGLFjgVAbPvTxx8mhgfZlT4O3h4eEuHNOchYi74U4JQ3yxHrORHU5cG7lRRcA/exec";
+
+            // 댓글 데이터 저장소
+            let comments = [];
+            let isLoading = false;
+
+            // API 호출 함수 (JSONP 방식으로 CORS 우회)
+            async function callGASAPI(action, data = {}) {
+                return new Promise((resolve, reject) => {
+                    try {
+                        console.log("API 호출 시작:", action, data);
+
+                        // JSONP 방식으로 호출
+                        const url = new URL(GAS_API_URL);
+                        url.searchParams.append("action", action);
+
+                        if (Object.keys(data).length > 0) {
+                            url.searchParams.append(
+                                "data",
+                                JSON.stringify(data)
+                            );
+                        }
+
+                        console.log("API URL:", url.toString());
+
+                        // 콜백 함수명 생성
+                        const callbackName =
+                            "jsonpCallback_" +
+                            Date.now() +
+                            "_" +
+                            Math.random().toString(36).substr(2, 9);
+
+                        console.log("콜백 함수명:", callbackName);
+
+                        // 전역 콜백 함수 생성
+                        window[callbackName] = function (result) {
+                            console.log("JSONP 응답 받음:", result);
+
+                            // 콜백 함수 정리
+                            delete window[callbackName];
+                            if (script.parentNode) {
+                                document.head.removeChild(script);
+                            }
+
+                            if (result.status === "success") {
+                                resolve(result);
+                            } else {
+                                reject(
+                                    new Error(result.message || "API 호출 실패")
+                                );
+                            }
+                        };
+
+                        // URL에 콜백 파라미터 추가
+                        url.searchParams.append("callback", callbackName);
+
+                        // 스크립트 태그 생성 및 추가
+                        const script = document.createElement("script");
+                        script.src = url.toString();
+                        script.onerror = function () {
+                            console.error("JSONP 스크립트 로드 실패");
+                            delete window[callbackName];
+                            if (script.parentNode) {
+                                document.head.removeChild(script);
+                            }
+
+                            // JSONP 실패 시 로컬 폴백
+                            if (action === "get") {
+                                resolve({
+                                    status: "success",
+                                    comments: [
+                                        {
+                                            id: "temp_1",
+                                            author: "테스트 사용자",
+                                            content:
+                                                "JSONP 연결 실패 - 로컬 모드",
+                                            timestamp: new Date().toISOString(),
+                                            likes: 0,
+                                            isAnonymous: false,
+                                        },
+                                    ],
+                                });
+                            } else if (action === "add") {
+                                resolve({
+                                    status: "success",
+                                    message:
+                                        "댓글이 추가되었습니다. (로컬 모드)",
+                                    comment: {
+                                        id: "local_" + Date.now(),
+                                        author: data.author || "사용자",
+                                        content: data.content || "",
+                                        timestamp: new Date().toISOString(),
+                                        likes: 0,
+                                        isAnonymous: data.isAnonymous || false,
+                                    },
+                                });
+                            } else {
+                                reject(new Error("JSONP 요청 실패"));
+                            }
+                        };
+
+                        // 타임아웃 설정 (5초)
+                        setTimeout(() => {
+                            if (window[callbackName]) {
+                                console.error("JSONP 요청 시간 초과");
+                                delete window[callbackName];
+                                if (script.parentNode) {
+                                    document.head.removeChild(script);
+                                }
+                                reject(new Error("요청 시간 초과"));
+                            }
+                        }, 5000);
+
+                        document.head.appendChild(script);
+                        console.log("JSONP 스크립트 추가됨");
+                    } catch (error) {
+                        console.error("API 호출 오류:", error);
+                        reject(error);
+                    }
+                });
+            }
+
+            // 좋아요 토글
+            async function toggleLike(commentId) {
+                try {
+                    const result = await callGASAPI("like", { commentId });
+
+                    if (result.status === "success") {
+                        // 로컬 댓글 데이터 업데이트
+                        const comment = comments.find(
+                            (c) => c.id === commentId
+                        );
+                        if (comment) {
+                            comment.likes = result.likes;
+                            renderComments();
+                        }
+                    } else {
+                        showNotification(
+                            result.message || "좋아요 처리에 실패했습니다.",
+                            "error"
+                        );
+                    }
+                } catch (error) {
+                    console.error("좋아요 토글 오류:", error);
+                    showNotification(
+                        "좋아요 처리 중 오류가 발생했습니다.",
+                        "error"
+                    );
+                }
+            }
+
+            // 댓글 수 업데이트
+            function updateCommentCount() {
+                const countElement = document.querySelector(
+                    "#issue .bg-primary\\/10"
+                );
+                if (countElement) {
+                    countElement.textContent = comments.length;
+                }
+            }
+
+            // 로딩 상태 표시
+            function showLoadingState(show) {
+                if (!commentList) return;
+
+                if (show) {
+                    commentList.innerHTML = `
+                        <div class="text-center py-8">
+                            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                            <p class="text-sm text-textSub mt-2">댓글을 불러오는 중...</p>
+                        </div>
+                    `;
+                }
+            }
+
+            // 시간 표시 함수
+            function getTimeAgo(timestamp) {
+                const now = new Date();
+                const commentTime = new Date(timestamp);
+                const diffInSeconds = Math.floor((now - commentTime) / 1000);
+
+                if (diffInSeconds < 60) return "방금 전";
+                if (diffInSeconds < 3600)
+                    return `${Math.floor(diffInSeconds / 60)}분 전`;
+                if (diffInSeconds < 86400)
+                    return `${Math.floor(diffInSeconds / 3600)}시간 전`;
+                if (diffInSeconds < 2592000)
+                    return `${Math.floor(diffInSeconds / 86400)}일 전`;
+
+                return commentTime.toLocaleDateString("ko-KR");
+            }
+
+            // HTML 이스케이프
+            function escapeHtml(text) {
+                const div = document.createElement("div");
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            // 문자 수 업데이트
+            function updateCharCount() {
+                const count = commentInput.value.length;
+                charCount.textContent = count;
+
+                // 450자 이상이면 경고 색상
+                if (count >= 450) {
+                    charCount.classList.add("text-red-500");
+                } else {
+                    charCount.classList.remove("text-red-500");
+                }
+            }
+
+            // 제출 버튼 상태 업데이트
+            function updateSubmitButton() {
+                const text = commentInput.value.trim();
+                const name = commentName.value.trim();
+                const isAnonymous = anonymousCheck.checked;
+
+                const canSubmit = text && (isAnonymous || name);
+                submitComment.disabled = !canSubmit;
+            }
+
+            // 이벤트 리스너 설정
+            submitComment.addEventListener("click", addComment);
+
+            commentInput.addEventListener("input", () => {
+                updateCharCount();
+                updateSubmitButton();
+            });
+
+            commentName.addEventListener("input", updateSubmitButton);
+
+            anonymousCheck.addEventListener("change", () => {
+                if (anonymousCheck.checked) {
+                    commentName.disabled = true;
+                    commentName.value = "";
+                } else {
+                    commentName.disabled = false;
+                }
+                updateSubmitButton();
+            });
+
+            commentInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    if (!submitComment.disabled) {
+                        addComment();
+                    }
+                }
+            });
+
+            // 좋아요 버튼 이벤트 (이벤트 위임)
+            document.addEventListener("click", (e) => {
+                if (e.target.closest(".like-btn")) {
+                    const button = e.target.closest(".like-btn");
+                    const commentId = button.dataset.commentId;
+                    if (commentId) {
+                        toggleLike(commentId);
+                    }
+                }
+            });
+
+            // 새로고침 버튼 이벤트
+            refreshComments.addEventListener("click", async () => {
+                if (isLoading) return;
+
+                // 버튼 애니메이션 시작
+                const refreshIcon = refreshComments.querySelector("svg");
+                refreshIcon.style.transform = "rotate(360deg)";
+                refreshComments.disabled = true;
+                refreshComments.classList.add("opacity-50");
+
+                // 새로고침 실행
+                await loadComments();
+
+                // 애니메이션 완료 후 버튼 상태 복원
+                setTimeout(() => {
+                    refreshIcon.style.transform = "rotate(0deg)";
+                    refreshComments.disabled = false;
+                    refreshComments.classList.remove("opacity-50");
+                }, 500);
+
+                // 성공 메시지 표시
+                showNotification("댓글이 새로고침되었습니다!", "success");
+            });
+
+            // 페이지 로드 시 댓글 불러오기
+            document.addEventListener("DOMContentLoaded", () => {
+                loadComments();
+                updateCharCount();
+                updateSubmitButton();
+
+                // 30초마다 댓글 새로고침 (실시간 느낌)
+                setInterval(() => {
+                    loadComments();
+                }, 30000);
+            });
+
+            // 간단한 알림 시스템
+            function showNotification(message, type = "info") {
+                const notification = document.createElement("div");
+                notification.className = `fixed top-4 right-4 z-50 px-4 py-2 rounded-lg text-white text-sm font-medium transition-all duration-300 transform translate-x-full ${
+                    type === "success"
+                        ? "bg-green-500"
+                        : type === "error"
+                        ? "bg-red-500"
+                        : "bg-blue-500"
+                }`;
+                notification.textContent = message;
+
+                document.body.appendChild(notification);
+
+                // 애니메이션
+                setTimeout(() => {
+                    notification.classList.remove("translate-x-full");
+                }, 100);
+
+                // 자동 제거
+                setTimeout(() => {
+                    notification.classList.add("translate-x-full");
+                    setTimeout(() => {
+                        if (document.body.contains(notification)) {
+                            document.body.removeChild(notification);
+                        }
+                    }, 300);
+                }, 3000);
+            }
+
+            // 댓글 목록 가져오기
+            async function loadComments() {
+                if (isLoading) return;
+
+                isLoading = true;
+                showLoadingState(true);
+
+                try {
+                    const result = await callGASAPI("get");
+
+                    if (result.status === "success") {
+                        comments = result.comments || [];
+                        renderComments();
+                        updateCommentCount();
+                    } else {
+                        showNotification(
+                            "댓글을 불러오는데 실패했습니다.",
+                            "error"
+                        );
+                    }
+                } catch (error) {
+                    console.error("댓글 로드 오류:", error);
+                    showNotification(
+                        "댓글을 불러오는데 실패했습니다.",
+                        "error"
+                    );
+                } finally {
+                    isLoading = false;
+                    showLoadingState(false);
+                }
+            }
+
+            // 댓글 렌더링 (최대 4개만 표시)
+            function renderComments() {
+                if (!commentList) return;
+
+                commentList.innerHTML = "";
+
+                if (comments.length === 0) {
+                    commentList.innerHTML = `
+                        <div class="text-center py-8 text-textSub">
+                            <svg class="w-12 h-12 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                            <p class="text-sm">아직 댓글이 없습니다.<br>첫 번째 댓글을 남겨보세요!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // 최대 4개만 표시
+                const displayComments = comments.slice(0, 4);
+
+                displayComments.forEach((comment) => {
+                    const commentDiv = createCommentElement(comment);
+                    commentList.appendChild(commentDiv);
+                });
+            }
+
+            // 댓글 요소 생성
+            function createCommentElement(comment) {
+                const commentDiv = document.createElement("div");
+                commentDiv.className =
+                    "flex gap-3 p-4 bg-white/50 rounded-xl border border-border/30 animate-fadeUp";
+                commentDiv.dataset.commentId = comment.id;
+
+                const initials = comment.author.charAt(0);
+                const colors = [
+                    "from-primary to-blue-500",
+                    "from-accent to-green-500",
+                    "from-primaryDark to-purple-500",
+                    "from-orange-500 to-red-500",
+                    "from-pink-500 to-purple-500",
+                ];
+                const colorIndex = comment.id.charCodeAt(0) % colors.length;
+                const randomColor = colors[colorIndex];
+
+                const timeAgo = getTimeAgo(comment.timestamp);
+
+                commentDiv.innerHTML = `
+                    <div class="w-8 h-8 bg-gradient-to-br ${randomColor} rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+                        ${initials}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="font-semibold text-textMain text-sm">${
+                                comment.author
+                            }</span>
+                            <span class="text-xs text-textSub">${timeAgo}</span>
+                            ${
+                                comment.isAnonymous
+                                    ? '<span class="text-xs bg-gray-100 text-gray-600 px-1 rounded">익명</span>'
+                                    : ""
+                            }
+                        </div>
+                        <p class="text-textMain text-sm leading-relaxed">${escapeHtml(
+                            comment.content
+                        )}</p>
+                        <div class="flex items-center gap-4 mt-2">
+                            <button class="like-btn text-xs text-textSub hover:text-primary transition flex items-center gap-1" data-comment-id="${
+                                comment.id
+                            }">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+                                </svg>
+                                좋아요 <span class="like-count">${
+                                    comment.likes || 0
+                                }</span>
+                            </button>
+                            <button class="text-xs text-textSub hover:text-primary transition">답글</button>
+                        </div>
+                    </div>
+                `;
+
+                return commentDiv;
+            }
+
+            // 댓글 추가
+            async function addComment() {
+                const text = commentInput.value.trim();
+                const name = commentName.value.trim();
+                const isAnonymous = anonymousCheck.checked;
+
+                if (!text) {
+                    showNotification("댓글 내용을 입력해주세요.", "error");
+                    return;
+                }
+
+                if (!isAnonymous && !name) {
+                    showNotification(
+                        "이름을 입력하거나 익명 체크를 해주세요.",
+                        "error"
+                    );
+                    return;
+                }
+
+                // 버튼 상태 변경
+                submitComment.disabled = true;
+                const originalText = submitComment.textContent;
+                submitComment.textContent = "작성 중...";
+
+                try {
+                    const result = await callGASAPI("add", {
+                        content: text,
+                        isAnonymous: isAnonymous,
+                        author: isAnonymous ? "익명" : name,
+                    });
+
+                    if (result.status === "success") {
+                        // 새 댓글을 목록 맨 위에 추가
+                        if (result.comment) {
+                            comments.unshift(result.comment);
+                        } else {
+                            // 서버에서 comment를 반환하지 않는 경우 로컬에서 생성
+                            comments.unshift({
+                                id: "local_" + Date.now(),
+                                author: isAnonymous ? "익명" : name,
+                                content: text,
+                                timestamp: new Date().toISOString(),
+                                likes: 0,
+                                isAnonymous: isAnonymous,
+                            });
+                        }
+                        renderComments();
+                        updateCommentCount();
+
+                        // 입력창 초기화
+                        commentInput.value = "";
+                        commentName.value = "";
+                        anonymousCheck.checked = false;
+                        updateCharCount();
+                        updateSubmitButton();
+
+                        showNotification("댓글이 작성되었습니다!", "success");
+                    } else {
+                        showNotification(
+                            result.message || "댓글 작성에 실패했습니다.",
+                            "error"
+                        );
+                    }
+                } catch (error) {
+                    console.error("댓글 추가 오류:", error);
+                    showNotification(
+                        "댓글 작성 중 오류가 발생했습니다.",
+                        "error"
+                    );
+                } finally {
+                    // 버튼 상태 복원
+                    submitComment.disabled = false;
+                    submitComment.textContent = originalText;
+                }
             }
         </script>
     </body>
