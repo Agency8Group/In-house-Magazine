@@ -204,6 +204,7 @@ function addComment(data) {
 function getComments() {
   try {
     const sheet = getSheet();
+    SpreadsheetApp.flush(); // Ensure we read the latest data
     const data = sheet.getDataRange().getValues();
     
     // 헤더 제거 및 유효한 데이터 필터링
