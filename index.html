@@ -3145,7 +3145,7 @@
             // Google Apps Script API 설정 (JSONP 방식)
             // ✅ 최종 배포 완료
             const GAS_API_URL =
-                "https://script.google.com/macros/s/AKfycbyh7t3k2VGLFjgVAbPvTxx8mhgfZlT4O3h4eEuHNOchYi74U4JQ3yxHrORHU5cG7lRRcA/exec";
+                "https://script.google.com/macros/s/AKfycbz4DNBFHENg89_7Vt5DdL_Lq9-Q-0d57lK5pz6PE5nIJ0kcuqCqrbfebXkc8ujVtEdcVA/exec";
 
             // 댓글 데이터 저장소
             let comments = [];
@@ -3246,7 +3246,7 @@
                             }
                         };
 
-                        // 타임아웃 설정 (5초)
+                        // 타임아웃 설정 (15초로 연장)
                         setTimeout(() => {
                             if (window[callbackName]) {
                                 console.error("JSONP 요청 시간 초과");
@@ -3256,7 +3256,7 @@
                                 }
                                 reject(new Error("요청 시간 초과"));
                             }
-                        }, 5000);
+                        }, 15000);
 
                         document.head.appendChild(script);
                         console.log("JSONP 스크립트 추가됨");
