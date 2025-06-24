@@ -10,7 +10,7 @@
 
         <meta
             name="description"
-            content="최신 사내 소식, 프로젝트, 조직도, 팀 스케쥴러 등 실시간으로 확인하는 사내 매거진 플랫폼입니다."
+            content="최신 사내 소식, 프로젝트, 조직도, 중요일정 보드 등 실시간으로 확인하는 사내 매거진 플랫폼입니다."
         />
 
         <!-- Alternate Languages: hreflang (영문, 일본어 등 필요시 확장) -->
@@ -31,7 +31,7 @@
         <meta property="og:title" content="사내 매거진 | In-House Magazine" />
         <meta
             property="og:description"
-            content="실시간 사내 이슈, 프로젝트, 조직도, 팀 스케쥴러 안내 - In-House Magazine"
+            content="실시간 사내 이슈, 프로젝트, 조직도, 중요일정 보드 안내 - In-House Magazine"
         />
         <meta property="og:url" content="https://www.eibe.co.kr/" />
         <meta property="og:image" content="" />
@@ -41,7 +41,7 @@
         <meta name="twitter:title" content="사내 매거진 | In-House Magazine" />
         <meta
             name="twitter:description"
-            content="실시간 사내 이슈, 프로젝트, 조직도, 팀 스케쥴러 안내 - In-House Magazine"
+            content="실시간 사내 이슈, 프로젝트, 조직도, 중요일정 보드 안내 - In-House Magazine"
         />
         <meta
             name="twitter:image"
@@ -935,7 +935,7 @@
                 <a
                     href="#TeamScheduler"
                     class="tab-link text-base font-semibold px-5 py-2 rounded-lg focus:outline-none"
-                    >팀 스케쥴러</a
+                    >중요일정 보드</a
                 >
                 <a
                     href="#insight"
@@ -995,7 +995,7 @@
                     <a
                         href="#TeamScheduler"
                         class="tab-link text-base font-semibold px-5 py-3 rounded-lg focus:outline-none"
-                        >팀 스케쥴러</a
+                        >중요일정 보드</a
                     >
                     <a
                         href="#insight"
@@ -1084,7 +1084,7 @@
                             <p
                                 class="text-base md:text-lg text-textSub leading-relaxed"
                             >
-                                프로젝트, 이슈, 조직도, 팀 스케쥴러까지<br />
+                                프로젝트, 이슈, 조직도, 중요일정 보드까지<br />
                                 <span class="text-accent font-bold text-lg"
                                     >궁금할 때 언제든 한눈에!</span
                                 >
@@ -1370,7 +1370,171 @@
                         </div>
                     </div>
                 </div>
-
+                <!-- 이달의 출근상 카드 3개 추가 -->
+                <div class="mt-12">
+                    <h3
+                        class="text-xl font-bold text-textMain mb-6 flex items-center gap-2"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="size-5"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                            />
+                        </svg>
+                        EIBE_MVP
+                    </h3>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- 출근상 카드 1 -->
+                        <div
+                            class="glass rounded-2xl shadow-card border border-border/50 p-6 flex flex-col gap-3 card-anim animate-slideIn group relative overflow-hidden"
+                            style="
+                                background: linear-gradient(
+                                    135deg,
+                                    rgba(255, 255, 255, 0.95) 0%,
+                                    rgba(255, 255, 255, 0.85) 100%
+                                );
+                                backdrop-filter: blur(12px);
+                                animation-delay: 0.3s;
+                            "
+                        >
+                            <div
+                                class="absolute top-0 right-0 w-20 h-20 bg-yellow-400/10 rounded-full -translate-y-10 translate-x-10 group-hover:scale-150 transition-transform duration-500"
+                            ></div>
+                            <div class="relative z-10">
+                                <div
+                                    class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg overflow-hidden"
+                                >
+                                    <img
+                                        src="./people/인물1.png"
+                                        alt="최고 출근왕"
+                                        class="w-full h-full object-cover"
+                                    />
+                                </div>
+                                <h3 class="text-lg font-bold text-center mb-2">
+                                    최고 출근왕
+                                </h3>
+                                <p
+                                    class="text-textSub text-sm text-center leading-relaxed"
+                                >
+                                    이번 달 가장 빠른 출근을 기록한<br />
+                                    <span class="font-semibold text-yellow-600"
+                                        >김철수 대리</span
+                                    >
+                                </p>
+                                <div
+                                    class="mt-4 pt-3 border-t border-border/30 text-center"
+                                >
+                                    <span
+                                        class="text-xs text-yellow-600 font-semibold"
+                                        >🏆 1등</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 출근상 카드 2 -->
+                        <div
+                            class="glass rounded-2xl shadow-card border border-border/50 p-6 flex flex-col gap-3 card-anim animate-slideIn group relative overflow-hidden"
+                            style="
+                                background: linear-gradient(
+                                    135deg,
+                                    rgba(255, 255, 255, 0.95) 0%,
+                                    rgba(255, 255, 255, 0.85) 100%
+                                );
+                                backdrop-filter: blur(12px);
+                                animation-delay: 0.4s;
+                            "
+                        >
+                            <div
+                                class="absolute top-0 right-0 w-20 h-20 bg-blue-400/10 rounded-full -translate-y-10 translate-x-10 group-hover:scale-150 transition-transform duration-500"
+                            ></div>
+                            <div class="relative z-10">
+                                <div
+                                    class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg overflow-hidden"
+                                >
+                                    <img
+                                        src="./people/인물2.png"
+                                        alt="정시 출근왕"
+                                        class="w-full h-full object-cover"
+                                    />
+                                </div>
+                                <h3 class="text-lg font-bold text-center mb-2">
+                                    정시 출근왕
+                                </h3>
+                                <p
+                                    class="text-textSub text-sm text-center leading-relaxed"
+                                >
+                                    매일 정확히 9시에 출근하는<br />
+                                    <span class="font-semibold text-blue-600"
+                                        >이영희 사원</span
+                                    >
+                                </p>
+                                <div
+                                    class="mt-4 pt-3 border-t border-border/30 text-center"
+                                >
+                                    <span
+                                        class="text-xs text-blue-600 font-semibold"
+                                        >⏰ 정시</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 출근상 카드 3 -->
+                        <div
+                            class="glass rounded-2xl shadow-card border border-border/50 p-6 flex flex-col gap-3 card-anim animate-slideIn group relative overflow-hidden"
+                            style="
+                                background: linear-gradient(
+                                    135deg,
+                                    rgba(255, 255, 255, 0.95) 0%,
+                                    rgba(255, 255, 255, 0.85) 100%
+                                );
+                                backdrop-filter: blur(12px);
+                                animation-delay: 0.5s;
+                            "
+                        >
+                            <div
+                                class="absolute top-0 right-0 w-20 h-20 bg-green-400/10 rounded-full -translate-y-10 translate-x-10 group-hover:scale-150 transition-transform duration-500"
+                            ></div>
+                            <div class="relative z-10">
+                                <div
+                                    class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg overflow-hidden"
+                                >
+                                    <img
+                                        src="./people/인물3.png"
+                                        alt="팀워크 출근왕"
+                                        class="w-full h-full object-cover"
+                                    />
+                                </div>
+                                <h3 class="text-lg font-bold text-center mb-2">
+                                    팀워크 출근왕
+                                </h3>
+                                <p
+                                    class="text-textSub text-sm text-center leading-relaxed"
+                                >
+                                    팀원들과 함께 출근하는<br />
+                                    <span class="font-semibold text-green-600"
+                                        >박민수 팀장</span
+                                    >
+                                </p>
+                                <div
+                                    class="mt-4 pt-3 border-t border-border/30 text-center"
+                                >
+                                    <span
+                                        class="text-xs text-green-600 font-semibold"
+                                        >👥 팀워크</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- 댓글 시스템 (Google Apps Script 연동) -->
                 <div
                     class="mt-8 glass rounded-2xl shadow-card border border-border/50 p-4 animate-fadeUp"
@@ -1660,7 +1824,7 @@
                                                     viewBox="0 0 24 24"
                                                 >
                                                     <path
-                                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
                                                     />
                                                 </svg>
                                             </div>
@@ -1884,7 +2048,7 @@
                             />
                         </svg>
 
-                        팀 스케쥴러
+                        중요일정 보드
                         <svg
                             class="w-5 h-5 group-hover:text-primary transition"
                             fill="none"
@@ -1906,7 +2070,7 @@
                             ></span>
                             <span
                                 class="text-sm font-semibold text-green-300 tracking-wider"
-                                >실시간 스케쥴 모니터링</span
+                                >중요일정 보드 모니터링</span
                             >
                         </div>
                         <div
