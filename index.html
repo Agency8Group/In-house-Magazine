@@ -3490,8 +3490,39 @@
                     "from-primaryDark to-purple-500",
                     "from-orange-500 to-red-500",
                     "from-pink-500 to-purple-500",
+                    "from-yellow-500 to-orange-500",
+                    "from-blue-500 to-indigo-500",
+                    "from-green-500 to-teal-500",
+                    "from-purple-500 to-pink-500",
+                    "from-red-500 to-pink-500",
+                    "from-indigo-500 to-purple-500",
+                    "from-teal-500 to-cyan-500",
+                    "from-cyan-500 to-blue-500",
+                    "from-emerald-500 to-green-500",
+                    "from-violet-500 to-purple-500",
                 ];
-                const colorIndex = comment.id.charCodeAt(0) % colors.length;
+
+                // 더 랜덤한 색상 선택 방식
+                let colorIndex;
+                if (comment.id.startsWith("local_")) {
+                    // 로컬 댓글의 경우 타임스탬프 기반으로 랜덤
+                    colorIndex =
+                        parseInt(comment.id.split("_")[1]) % colors.length;
+                } else {
+                    // 서버 댓글의 경우 ID + 작성자 이름 기반으로 랜덤
+                    const hash =
+                        comment.id + comment.author + comment.timestamp;
+                    let hashValue = 0;
+                    for (let i = 0; i < hash.length; i++) {
+                        hashValue =
+                            ((hashValue << 5) -
+                                hashValue +
+                                hash.charCodeAt(i)) &
+                            0xffffffff;
+                    }
+                    colorIndex = Math.abs(hashValue) % colors.length;
+                }
+
                 const randomColor = colors[colorIndex];
 
                 const timeAgo = getTimeAgo(comment.timestamp);
