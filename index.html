@@ -778,6 +778,7 @@
 
             .person-image {
                 transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                cursor: pointer;
             }
 
             /* 호버 시 배경 어둡게 처리 */
@@ -799,6 +800,46 @@
             }
 
             .dark .person-image-container:hover::before {
+                background: rgba(0, 0, 0, 0.3);
+            }
+
+            /* EIBE M.V.P 카드 호버 효과 제거 - 카드 자체는 움직이지 않음 */
+            .glass.rounded-2xl.shadow-card.border.border-border\/50.p-6.flex.flex-col.gap-3.card-anim.animate-slideIn.group.relative.overflow-hidden:hover {
+                transform: none !important;
+                box-shadow: 0 4px 24px 0 rgba(36, 50, 93, 0.09) !important;
+            }
+
+            /* EIBE M.V.P 카드 전체 호버 시 인물사진 확대 */
+            .glass.rounded-2xl.shadow-card.border.border-border\/50.p-6.flex.flex-col.gap-3.card-anim.animate-slideIn.group.relative.overflow-hidden:hover
+                .person-image-container {
+                transform: scale(1.7);
+                z-index: 100;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            }
+
+            .glass.rounded-2xl.shadow-card.border.border-border\/50.p-6.flex.flex-col.gap-3.card-anim.animate-slideIn.group.relative.overflow-hidden:hover
+                .person-image-container::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.1);
+                z-index: 90;
+                pointer-events: none;
+            }
+
+            /* 다크모드에서의 EIBE M.V.P 카드 호버 효과 */
+            .dark
+                .glass.rounded-2xl.shadow-card.border.border-border\/50.p-6.flex.flex-col.gap-3.card-anim.animate-slideIn.group.relative.overflow-hidden:hover
+                .person-image-container {
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            }
+
+            .dark
+                .glass.rounded-2xl.shadow-card.border.border-border\/50.p-6.flex.flex-col.gap-3.card-anim.animate-slideIn.group.relative.overflow-hidden:hover
+                .person-image-container::before {
                 background: rgba(0, 0, 0, 0.3);
             }
         </style>
@@ -1183,7 +1224,7 @@
                                 </div>
 
                                 <div class="text-xs text-textSub font-medium">
-                                    의견 나누기
+                                    우리가 공유한 생각들
                                 </div>
                             </div>
                         </div>
@@ -1598,7 +1639,7 @@
                                 />
                             </svg>
                             <h3 class="text-lg font-bold text-textMain">
-                                의견 나누기
+                                당신의 생각은?
                             </h3>
                             <span
                                 class="text-xs text-textSub bg-primary/10 text-primary px-2 py-1 rounded-full"
@@ -1668,7 +1709,7 @@
                                 <!-- 댓글 내용 입력란 -->
                                 <textarea
                                     id="commentInput"
-                                    placeholder="의견을 남겨보세요..."
+                                    placeholder="함께 이야기해요:)"
                                     class="comment-textarea"
                                     rows="3"
                                     maxlength="500"
@@ -1897,9 +1938,9 @@
                                     class="relative group overflow-hidden rounded-2xl shadow-card border border-border/50 bg-white aspect-[4/3] flex"
                                 >
                                     <img
-                                        src="./photobooth/대표님스튜디오 프로필 촬영.jpg"
+                                        src="./photobooth/cj온스타일 브라이언.jpg"
                                         class="object-cover w-full h-full blur-[2px] group-hover:blur-none group-hover:scale-110 transition-all duration-700 ease-out photobooth-image"
-                                        alt="팀 워크샵"
+                                        alt="브라이언이 진행하는 Live"
                                         loading="lazy"
                                     />
                                     <div
@@ -1927,19 +1968,20 @@
                                             <h3
                                                 class="text-white font-bold text-lg md:text-xl mb-2 drop-shadow-lg"
                                             >
-                                                ex팀 워크샵
+                                                브라이언 쇼호스트로 출현!
                                             </h3>
                                             <p
                                                 class="text-white/90 text-sm drop-shadow"
                                             >
-                                                팀 빌딩 활동
+                                                cj온스타일에서 <br />
+                                                X50s Pro Master 를 소개했어요.
                                             </p>
                                         </div>
                                     </div>
                                     <div
                                         class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-semibold text-accent shadow-lg"
                                     >
-                                        👥 팀워크
+                                        🎥 라이브
                                     </div>
                                 </div>
                             </div>
@@ -2606,6 +2648,56 @@
             </div>
         </div>
 
+        <!-- 인물사진 원본 모달 -->
+        <div
+            id="personModal"
+            class="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300"
+        >
+            <div class="relative max-w-4xl max-h-[90vh] mx-4">
+                <!-- 모달 내용 -->
+                <div
+                    class="relative bg-white rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300"
+                >
+                    <!-- 이미지 -->
+                    <img
+                        id="modalImage"
+                        src=""
+                        alt="인물사진 원본"
+                        class="w-full h-auto max-h-[80vh] object-contain"
+                    />
+                    <!-- 닫기 버튼 -->
+                    <button
+                        id="closeModal"
+                        class="absolute top-4 right-4 w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+                        aria-label="모달 닫기"
+                    >
+                        <svg
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            viewBox="0 0 24 24"
+                        >
+                            <path d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    <!-- 인물 정보 -->
+                    <div
+                        class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6"
+                    >
+                        <h3
+                            id="modalTitle"
+                            class="text-white text-xl font-bold mb-2"
+                        ></h3>
+                        <p
+                            id="modalDescription"
+                            class="text-white/90 text-sm"
+                        ></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
             // ===== 전역 변수 선언 =====
             const navLinks = document.querySelectorAll("nav a[href^='#']");
@@ -2774,7 +2866,7 @@
                 },
                 {
                     q: "사내 매거진 <br> 사이트에 문제가 있어요.<br> 누구에게 말해줄까요?",
-                    a: "현재 보고 계신 사내 매거진 웹사이트의 \n 유지보수, 스케줄 변경 등은\n[전략기획실] 지윤환 사원에게 요청하시면 바로 지원해드립니다.",
+                    a: "현재 보고 계신 사내 매거진 웹사이트의 \n 유지보수, 스케줄 변경 등은\n[전략기획실] 지윤환에게 요청하시면 바로 지원해드립니다.",
                 },
             ];
 
@@ -3644,6 +3736,105 @@
                     submitComment.textContent = originalText;
                 }
             }
+
+            // ===== 인물사진 모달 시스템 =====
+            const personModal = document.getElementById("personModal");
+            const modalImage = document.getElementById("modalImage");
+            const modalTitle = document.getElementById("modalTitle");
+            const modalDescription =
+                document.getElementById("modalDescription");
+            const closeModal = document.getElementById("closeModal");
+
+            // 인물 데이터
+            const personData = {
+                "인물1.png": {
+                    title: "최고 출근왕",
+                    description: "이번 달 가장 빠른 출근을 기록한 김철수 대리",
+                },
+                "인물2.png": {
+                    title: "정시 출근왕",
+                    description: "매일 정확히 9시에 출근하는 이영희 사원",
+                },
+                "인물3.png": {
+                    title: "팀워크 출근왕",
+                    description: "팀원들과 함께 출근하는 박민수 팀장",
+                },
+            };
+
+            // 모달 열기
+            function openPersonModal(imageSrc, personName) {
+                const data = personData[imageSrc] || {
+                    title: personName,
+                    description: "EIBE 팀원",
+                };
+
+                modalImage.src = `./people/${imageSrc}`;
+                modalTitle.textContent = data.title;
+                modalDescription.textContent = data.description;
+
+                // 모달 표시
+                personModal.classList.remove(
+                    "opacity-0",
+                    "pointer-events-none"
+                );
+                personModal
+                    .querySelector(".bg-white")
+                    .classList.remove("scale-95");
+                personModal
+                    .querySelector(".bg-white")
+                    .classList.add("scale-100");
+
+                // 스크롤 방지
+                document.body.style.overflow = "hidden";
+            }
+
+            // 모달 닫기
+            function closePersonModal() {
+                personModal.classList.add("opacity-0", "pointer-events-none");
+                personModal
+                    .querySelector(".bg-white")
+                    .classList.remove("scale-100");
+                personModal
+                    .querySelector(".bg-white")
+                    .classList.add("scale-95");
+
+                // 스크롤 복원
+                document.body.style.overflow = "";
+            }
+
+            // 모달 이벤트 리스너
+            closeModal.addEventListener("click", closePersonModal);
+            personModal.addEventListener("click", (e) => {
+                if (e.target === personModal) {
+                    closePersonModal();
+                }
+            });
+
+            // ESC 키로 모달 닫기
+            document.addEventListener("keydown", (e) => {
+                if (
+                    e.key === "Escape" &&
+                    !personModal.classList.contains("opacity-0")
+                ) {
+                    closePersonModal();
+                }
+            });
+
+            // 인물사진 클릭 이벤트 (이벤트 위임)
+            document.addEventListener("click", (e) => {
+                const personImage = e.target.closest(
+                    ".person-image-container img"
+                );
+                if (personImage) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const imageSrc = personImage.src.split("/").pop();
+                    const personName = personImage.alt;
+
+                    openPersonModal(imageSrc, personName);
+                }
+            });
         </script>
     </body>
 </html>
