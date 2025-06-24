@@ -761,6 +761,46 @@
             .dark .comment-textarea:focus {
                 border-color: #4957f3;
             }
+
+            /* 인물사진 호버 효과 */
+            .person-image-container {
+                position: relative;
+                display: inline-block;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                cursor: pointer;
+            }
+
+            .person-image-container:hover {
+                transform: scale(1.8);
+                z-index: 50;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            }
+
+            .person-image {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            /* 호버 시 배경 어둡게 처리 */
+            .person-image-container:hover::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.1);
+                z-index: 40;
+                pointer-events: none;
+            }
+
+            /* 다크모드에서의 호버 효과 */
+            .dark .person-image-container:hover {
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            }
+
+            .dark .person-image-container:hover::before {
+                background: rgba(0, 0, 0, 0.3);
+            }
         </style>
     </head>
     <body
@@ -1411,12 +1451,12 @@
                             ></div>
                             <div class="relative z-10">
                                 <div
-                                    class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg overflow-hidden"
+                                    class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg overflow-hidden person-image-container"
                                 >
                                     <img
                                         src="./people/인물1.png"
                                         alt="최고 출근왕"
-                                        class="w-full h-full object-cover"
+                                        class="w-full h-full object-cover person-image"
                                     />
                                 </div>
                                 <h3 class="text-lg font-bold text-center mb-2">
@@ -1458,12 +1498,12 @@
                             ></div>
                             <div class="relative z-10">
                                 <div
-                                    class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg overflow-hidden"
+                                    class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg overflow-hidden person-image-container"
                                 >
                                     <img
                                         src="./people/인물2.png"
                                         alt="정시 출근왕"
-                                        class="w-full h-full object-cover"
+                                        class="w-full h-full object-cover person-image"
                                     />
                                 </div>
                                 <h3 class="text-lg font-bold text-center mb-2">
@@ -1505,12 +1545,12 @@
                             ></div>
                             <div class="relative z-10">
                                 <div
-                                    class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg overflow-hidden"
+                                    class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg overflow-hidden person-image-container"
                                 >
                                     <img
                                         src="./people/인물3.png"
                                         alt="팀워크 출근왕"
-                                        class="w-full h-full object-cover"
+                                        class="w-full h-full object-cover person-image"
                                     />
                                 </div>
                                 <h3 class="text-lg font-bold text-center mb-2">
