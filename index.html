@@ -3453,10 +3453,10 @@
                 updateCharCount();
                 updateSubmitButton();
 
-                // 30초마다 댓글 새로고침 (실시간 느낌)
+                // 1분 마다 댓글 새로고침 (실시간 느낌)
                 setInterval(() => {
                     loadComments();
-                }, 30000);
+                }, 60000);
             });
 
             // 간단한 알림 시스템
