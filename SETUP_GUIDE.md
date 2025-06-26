@@ -235,3 +235,107 @@ Access to fetch at '...' from origin '...' has been blocked by CORS policy
 
 **마지막 업데이트**: 2025년 1월
 **버전**: v1.0
+
+EIBE 사내 매거진 웹사이트 구조 설명서
+�� 개요
+파일명: index.html
+목적: EIBE 사내 매거진 플랫폼 - 실시간 사내 소식, 프로젝트, 조직도, 중요일정 등을 통합 관리하는 웹사이트
+🏗️ 전체 구조
+
+1. HTML5 문서 구조
+   Apply to index.html
+2. 주요 섹션 구성
+   Apply to index.html
+   🎨 디자인 시스템
+   색상 팔레트
+   Primary: #4957f3 (메인 블루)
+   Accent: #17c684 (그린)
+   PrimaryDark: #2832a2 (다크 블루)
+   Surface: #f7f9fa (배경색)
+   TextMain: #23262f (주 텍스트)
+   TextSub: #798092 (보조 텍스트)
+   폰트
+   Inter (영문)
+   Noto Sans KR (한글)
+   반응형 브레이크포인트
+   모바일: < 768px
+   태블릿: 768px - 1024px
+   데스크톱: > 1024px
+   �� 핵심 기능
+3. 네비게이션 시스템
+   Apply to index.html
+4. 아코디언 시스템
+   Apply to index.html
+   적용 섹션: 중요일정 보드, Tool-box, 조직도, 기업소개서
+   동작: 버튼 클릭 시 iframe 영역 펼침/접힘
+5. 다크모드 토글
+   Apply to index.html
+6. 댓글 시스템 (실시간 api 연동)
+   Apply to index.html
+7. Swiper 캐러셀 (포토부스)
+   Apply to index.html
+   �� 반응형 디자인
+   모바일 최적화
+   햄버거 메뉴 (768px 이하)
+   터치 친화적 인터페이스
+   스와이프 제스처 지원
+   뷰포트 최적화
+   데스크톱 최적화
+   호버 효과
+   키보드 네비게이션
+   마우스 인터랙션
+   🎯 특별 기능
+8. EIBE M.V.P 섹션
+   인물사진 호버 확대 효과
+   모달 팝업 시스템
+   랜덤 색상 아바타
+9. 실시간 통합
+   중요일정 보드 (자동 일정알림 발송)
+   조직도
+   Tool-box(인프라 개발 도구모음 )
+   기업소개서: 로컬 PDF 파일
+10. 외부 링크 통합
+    AI 상담포털(ai활용,ojt까지)
+    피드백박스:(수집api구축)
+    오피스 테트리스: (수집 api구축)
+    �� SEO & 접근성
+    메타 태그
+    Open Graph (Facebook/LinkedIn)
+    Twitter Card
+    Canonical URL
+    다국어 지원 (hreflang)
+    접근성
+    ARIA 라벨
+    키보드 네비게이션
+    스크린 리더 지원
+    색상 대비 최적화
+    🚀 성능 최적화
+    이미지 최적화
+    Lazy loading
+    WebP 포맷 지원
+    반응형 이미지
+    스크립트 최적화
+    CDN 활용 (Tailwind, Swiper, Lottie)
+    비동기 로딩
+    디바운스 함수 적용
+    📊 데이터 흐름
+    댓글 시스템
+    Apply to index.html
+    설정 저장
+    Apply to index.html
+    🛠️ 기술 스택
+    HTML5: 시맨틱 마크업
+    CSS3: Tailwind CSS, 커스텀 애니메이션
+    JavaScript: ES6+, 모듈화된 함수
+    외부 라이브러리: Swiper, Lottie, Google Apps Script
+    호스팅: GitHub Pages
+    �� 확장성
+    새 섹션 추가
+    HTML 섹션 추가
+    네비게이션 메뉴 추가
+    스크롤 앵커 연결
+    반응형 스타일 적용
+    기능 확장
+    새로운 iframe 통합
+    추가 외부 API 연동
+    커스텀 위젯 개발
