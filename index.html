@@ -842,6 +842,102 @@
                 .person-image-container::before {
                 background: rgba(0, 0, 0, 0.3);
             }
+
+            /* 다크모드에서 댓글 테두리 제거 */
+            .dark .comment-item {
+                border: none !important;
+                background: rgba(35, 38, 47, 0.6) !important;
+            }
+
+            /* 댓글 성능 최적화 - 가상화 스타일 */
+            .comment-virtual-container {
+                height: 400px;
+                overflow-y: auto;
+                position: relative;
+            }
+
+            .comment-virtual-list {
+                position: relative;
+            }
+
+            .comment-virtual-item {
+                position: absolute;
+                width: 100%;
+                left: 0;
+                right: 0;
+            }
+
+            /* 댓글 페이지네이션 */
+            .comment-pagination {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
+                margin-top: 16px;
+                padding: 12px;
+                background: rgba(255, 255, 255, 0.8);
+                border-radius: 12px;
+                backdrop-filter: blur(8px);
+            }
+
+            .dark .comment-pagination {
+                background: rgba(35, 38, 47, 0.8);
+            }
+
+            .pagination-btn {
+                padding: 6px 12px;
+                border: 1px solid #e2e8f0;
+                background: white;
+                border-radius: 8px;
+                font-size: 14px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+
+            .dark .pagination-btn {
+                border-color: #475569;
+                background: rgba(35, 38, 47, 0.9);
+                color: #f7f9fa;
+            }
+
+            .pagination-btn:hover:not(:disabled) {
+                background: #f8fafc;
+                border-color: #4957f3;
+            }
+
+            .dark .pagination-btn:hover:not(:disabled) {
+                background: rgba(73, 87, 243, 0.1);
+                border-color: #4957f3;
+            }
+
+            .pagination-btn:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+
+            .pagination-info {
+                font-size: 14px;
+                color: #64748b;
+            }
+
+            .dark .pagination-info {
+                color: #94a3b8;
+            }
+
+            /* 다크모드 새로고침 버튼 스타일 */
+            .dark #refreshComments {
+                background: rgba(35, 38, 47, 0.9) !important;
+                border-color: #475569 !important;
+                color: #f7f9fa !important;
+            }
+            .dark #refreshComments:hover {
+                background: rgba(73, 87, 243, 0.1) !important;
+                color: #a5b4fc !important;
+            }
+            .dark #refreshComments:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
         </style>
     </head>
     <body
@@ -1684,6 +1780,46 @@
                         class="comment-container space-y-4 mb-6"
                     >
                         <!-- 실제 댓글은 여기에 동적으로 추가됩니다 -->
+                    </div>
+
+                    <!-- 댓글 페이지네이션 -->
+                    <div
+                        id="commentPagination"
+                        class="comment-pagination hidden"
+                    >
+                        <button id="prevPage" class="pagination-btn">
+                            <svg
+                                class="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15 19l-7-7 7-7"
+                                />
+                            </svg>
+                        </button>
+                        <span id="paginationInfo" class="pagination-info"
+                            >1-10 / 0</span
+                        >
+                        <button id="nextPage" class="pagination-btn">
+                            <svg
+                                class="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                        </button>
                     </div>
 
                     <!-- 댓글 작성 폼 -->
@@ -3283,6 +3419,11 @@
             const commentList = document.getElementById("commentList");
             const refreshComments = document.getElementById("refreshComments");
             const charCount = document.getElementById("charCount");
+            const commentPagination =
+                document.getElementById("commentPagination");
+            const prevPage = document.getElementById("prevPage");
+            const nextPage = document.getElementById("nextPage");
+            const paginationInfo = document.getElementById("paginationInfo");
 
             // Google Apps Script API 설정 (JSONP 방식)
             // ✅ 최종 배포 완료
@@ -3292,6 +3433,11 @@
             // 댓글 데이터 저장소
             let comments = [];
             let isLoading = false;
+
+            // 페이지네이션 설정
+            const COMMENTS_PER_PAGE = 10;
+            let currentPage = 1;
+            let totalPages = 1;
 
             // API 호출 함수 (JSONP 방식으로 CORS 우회)
             async function callGASAPI(action, data = {}) {
@@ -3666,8 +3812,6 @@
             function renderComments() {
                 if (!commentList) return;
 
-                commentList.innerHTML = ""; // 목록 초기화
-
                 // 최신순으로 정렬
                 comments.sort(
                     (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
@@ -3684,21 +3828,19 @@
                             </div>
                         </div>
                     `;
+                    commentPagination.classList.add("hidden");
                     return;
                 }
 
-                // 모든 댓글을 표시하도록 수정
-                comments.forEach((comment) => {
-                    const commentDiv = createCommentElement(comment);
-                    commentList.appendChild(commentDiv);
-                });
+                // 페이지네이션 적용
+                updatePagination();
             }
 
             // 댓글 요소 생성
             function createCommentElement(comment) {
                 const commentDiv = document.createElement("div");
                 commentDiv.className =
-                    "flex gap-3 p-4 bg-white/50 rounded-xl border border-border/30 animate-fadeUp";
+                    "flex gap-3 p-4 bg-white/50 rounded-xl border border-border/30 animate-fadeUp comment-item";
                 commentDiv.dataset.commentId = comment.id;
 
                 const initials = comment.author.charAt(0);
@@ -4063,6 +4205,51 @@
 
             easterEggEmail.addEventListener("mouseleave", () => {
                 easterEggEmail.style.transform = "scale(1)";
+            });
+
+            // ===== 페이지네이션 함수들 =====
+            // 페이지네이션 함수
+            function updatePagination() {
+                const startIndex = (currentPage - 1) * COMMENTS_PER_PAGE;
+                const endIndex = startIndex + COMMENTS_PER_PAGE;
+                const visibleComments = comments.slice(startIndex, endIndex);
+
+                commentList.innerHTML = "";
+                visibleComments.forEach((comment) => {
+                    const commentDiv = createCommentElement(comment);
+                    commentList.appendChild(commentDiv);
+                });
+
+                const totalComments = comments.length;
+                totalPages = Math.ceil(totalComments / COMMENTS_PER_PAGE);
+
+                // 페이지네이션 표시/숨김 처리
+                if (totalComments > COMMENTS_PER_PAGE) {
+                    commentPagination.classList.remove("hidden");
+                    paginationInfo.textContent = `${startIndex + 1}-${Math.min(
+                        endIndex,
+                        totalComments
+                    )} / ${totalComments}`;
+                    prevPage.disabled = currentPage === 1;
+                    nextPage.disabled = endIndex >= totalComments;
+                } else {
+                    commentPagination.classList.add("hidden");
+                }
+            }
+
+            // 페이지네이션 이벤트 리스너
+            prevPage.addEventListener("click", () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updatePagination();
+                }
+            });
+
+            nextPage.addEventListener("click", () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updatePagination();
+                }
             });
         </script>
     </body>
