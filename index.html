@@ -663,10 +663,25 @@
 
             /* 댓글 시스템 스타일 */
             .comment-container {
-                height: 400px; /* 고정 높이 설정 */
+                height: 300px; /* 데스크톱 기본 높이 */
                 overflow-y: auto;
                 scrollbar-width: thin;
                 scrollbar-color: #cbd5e1 #f1f5f9;
+            }
+
+            /* 모바일에서 댓글 컨테이너 높이 조정 */
+            @media (max-width: 768px) {
+                .comment-container {
+                    height: 250px; /* 모바일에서는 더 작게 */
+                    -webkit-overflow-scrolling: touch; /* iOS 스크롤 최적화 */
+                }
+            }
+
+            /* 작은 모바일 화면 */
+            @media (max-width: 480px) {
+                .comment-container {
+                    height: 200px; /* 작은 화면에서는 더 작게 */
+                }
             }
 
             .comment-container::-webkit-scrollbar {
@@ -851,9 +866,23 @@
 
             /* 댓글 성능 최적화 - 가상화 스타일 */
             .comment-virtual-container {
-                height: 400px;
+                height: 300px; /* 데스크톱 기본 높이 */
                 overflow-y: auto;
                 position: relative;
+            }
+
+            /* 모바일에서 가상화 컨테이너 높이 조정 */
+            @media (max-width: 768px) {
+                .comment-virtual-container {
+                    height: 250px;
+                    -webkit-overflow-scrolling: touch;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .comment-virtual-container {
+                    height: 200px;
+                }
             }
 
             .comment-virtual-list {
