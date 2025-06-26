@@ -1,10 +1,5 @@
 /**
- * [2024-06-XX] 프론트엔드 페이지네이션/다크모드 대응
- * - 프론트엔드에서 전체 댓글을 받아 페이지네이션/다크모드 처리
- * - API는 기존과 동일하게 전체 댓글 목록 반환(get), 추가(add), 좋아요(like)만 지원
- * - 향후 대용량 데이터(수천개 이상)일 경우, 서버단에서 페이징 처리 필요
- * 
- * 사내 매거진 댓글 시스템 - Google Apps Script
+ * [2025-01-XX] 사내 매거진 댓글 시스템 - Google Apps Script
  * 
  * 기능:
  * - 댓글 추가 (add)
@@ -12,14 +7,14 @@
  * - 좋아요 토글 (like)
  * - 댓글 삭제 (delete)
  * - CORS 헤더 지원
+ * - JSONP 지원
  * - 에러 처리
  * - 데이터 검증
  */
 
 // 스프레드시트 ID (실제 스프레드시트 ID로 변경 필요)
 // Google Sheets URL에서 찾을 수 있습니다: https://docs.google.com/spreadsheets/d/여기가_스프레드시트_ID/edit
-// 예시: const SPREADSHEET_ID = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms';
-// ✅ 실제 Google Sheets ID 설정 완료
+// ⚠️ 중요: 실제 Google Sheets ID를 입력해야 합니다!
 const SPREADSHEET_ID = '15drNF-KqgiezlVpEjf97GEqmbxLdn4iVrqG3LSnnVdE';
 const SHEET_NAME = 'Comments';
 

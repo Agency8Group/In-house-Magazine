@@ -3426,9 +3426,9 @@
             const paginationInfo = document.getElementById("paginationInfo");
 
             // Google Apps Script API 설정 (JSONP 방식)
-            // ✅ 최종 배포 완료
+            // ✅ 2025-01-26 새로운 배포 완료
             const GAS_API_URL =
-                "https://script.google.com/macros/s/AKfycbwu4RnqGETHxeihdabqwnGH1C8QeDhbQURyVpVjCMQFa8swXvF4uD672a909Vyu1wHStQ/exec";
+                "https://script.google.com/macros/s/AKfycbzi8dhqZg0XsJmxfjXM2tWcYFLv-Db0gm4rzEbYb2pRtfvNgc9xu8zBNnyedtgGE0QKzQ/exec";
 
             // 댓글 데이터 저장소
             let comments = [];
@@ -3843,7 +3843,12 @@
                     "flex gap-3 p-4 bg-white/50 rounded-xl border border-border/30 animate-fadeUp comment-item";
                 commentDiv.dataset.commentId = comment.id;
 
-                const initials = comment.author.charAt(0);
+                // author 필드 타입 검증 및 안전한 처리
+                const author = comment.author || "익명";
+                const authorString =
+                    typeof author === "string" ? author : String(author);
+                const initials = authorString.charAt(0) || "익";
+
                 const colors = [
                     "from-primary to-blue-500",
                     "from-accent to-green-500",
@@ -3886,8 +3891,7 @@
 
                 if (storedColorIndex === null) {
                     // 새로운 색상 할당 - 작성자 이름과 타임스탬프를 조합하여 랜덤성 향상
-                    const seed =
-                        comment.author + comment.timestamp + Date.now();
+                    const seed = authorString + comment.timestamp + Date.now();
                     let hashValue = 0;
                     for (let i = 0; i < seed.length; i++) {
                         hashValue =
@@ -3916,9 +3920,7 @@
                     </div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-2 mb-1">
-                            <span class="font-semibold text-textMain text-sm">${
-                                comment.author
-                            }</span>
+                            <span class="font-semibold text-textMain text-sm">${authorString}</span>
                             <span class="text-xs text-textSub">${timeAgo}</span>
                             ${
                                 comment.isAnonymous

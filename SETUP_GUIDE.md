@@ -212,17 +212,128 @@ Access to fetch at '...' from origin '...' has been blocked by CORS policy
 1. Apps Script 코드 수정 후 재배포 필요
 2. 웹 앱 URL은 동일하게 유지됨
 
-### 2. 데이터 마이그레이션
+### 2. GNK 파일 관리 ⚠️ 중요
+
+#### GNK 파일이란?
+
+-   **Google Native Key**: Google Apps Script 배포 시 생성되는 실행 파일
+-   **고유 식별자**: 각 배포마다 고유한 GNK ID 생성
+-   **자동 생성**: 코드 배포 시 Google 서버에서 자동 생성
+
+#### GNK 파일 삭제 시 대응
+
+1. **즉시 재배포**: 새로운 GNK 파일 생성
+2. **URL 업데이트**: HTML 파일의 API URL 변경
+3. **테스트**: 댓글 시스템 정상 작동 확인
+
+#### 예방 방법
+
+1. **정기 백업**: 배포 URL을 문서에 기록
+2. **모니터링**: 주기적으로 API 연결 상태 확인
+3. **버전 관리**: 배포 버전별 URL 관리
+
+### 3. 데이터 마이그레이션
 
 1. 기존 댓글 데이터 백업
 2. 새 구조로 데이터 이전
 3. 테스트 후 적용
 
-### 3. 모니터링
+### 4. 모니터링
 
 -   정기적으로 Apps Script 로그 확인
 -   스프레드시트 데이터 정리
 -   백업 데이터 관리
+-   **GNK 파일 상태 확인** (월 1회 권장)
+
+## 📋 GNK 파일 관리 체크리스트
+
+### ✅ 월간 점검 항목
+
+-   [ ] **API 연결 테스트**
+
+    -   웹사이트에서 댓글 작성 테스트
+    -   새로고침 버튼 작동 확인
+    -   좋아요 기능 테스트
+
+-   [ ] **배포 URL 백업**
+
+    -   현재 배포 URL 기록
+    -   스프레드시트 ID 확인
+    -   백업 날짜 기록
+
+-   [ ] **로그 확인**
+    -   Google Apps Script 실행 로그 확인
+    -   오류 메시지 확인
+    -   성능 지표 확인
+
+### 🚨 긴급 대응 시나리오
+
+#### 시나리오 1: GNK 파일 삭제됨
+
+1. **즉시 재배포**
+
+    - Google Apps Script 편집기 접속
+    - "배포" → "새 배포" 클릭
+    - 새로운 웹앱 URL 복사
+
+2. **HTML 파일 업데이트**
+
+    - `index.html`의 `GAS_API_URL` 변경
+    - 새로운 배포 URL 적용
+
+3. **테스트**
+    - 댓글 시스템 정상 작동 확인
+    - 모든 기능 테스트
+
+#### 시나리오 2: API 응답 없음
+
+1. **원인 진단**
+
+    - 브라우저 개발자 도구에서 네트워크 오류 확인
+    - Google Apps Script 로그 확인
+
+2. **재배포**
+
+    - 코드 수정 없이 재배포 시도
+    - 새로운 URL로 업데이트
+
+3. **대안**
+    - 로컬 폴백 모드 활성화
+    - 임시 댓글 시스템 구축
+
+### 📊 현재 배포 정보
+
+**최신 배포 정보 (2025-01-26)**
+
+-   **배포 ID**: `AKfycbzi8dhqZg0XsJmxfjXM2tWcYFLv-Db0gm4rzEbYb2pRtfvNgc9xu8zBNnyedtgGE0QKzQ`
+-   **웹앱 URL**: `https://script.google.com/macros/s/AKfycbzi8dhqZg0XsJmxfjXM2tWcYFLv-Db0gm4rzEbYb2pRtfvNgc9xu8zBNnyedtgGE0QKzQ/exec`
+-   **스프레드시트 ID**: `15drNF-KqgiezlVpEjf97GEqmbxLdn4iVrqG3LSnnVdE`
+-   **상태**: ✅ 정상 작동
+
+### 🔧 유지보수 도구
+
+#### 1. API 상태 확인
+
+```javascript
+// 브라우저 콘솔에서 실행
+fetch(
+    "https://script.google.com/macros/s/AKfycbzi8dhqZg0XsJmxfjXM2tWcYFLv-Db0gm4rzEbYb2pRtfvNgc9xu8zBNnyedtgGE0QKzQ/exec?action=get"
+)
+    .then((response) => response.json())
+    .then((data) => console.log("API 상태:", data))
+    .catch((error) => console.error("API 오류:", error));
+```
+
+#### 2. 스프레드시트 연결 확인
+
+-   Google Sheets 직접 접속
+-   "Comments" 시트 데이터 확인
+-   최신 댓글 데이터 확인
+
+#### 3. 로그 모니터링
+
+-   Google Apps Script 편집기 → "실행" → "실행 로그"
+-   오류 메시지 및 성능 지표 확인
 
 ## 📞 지원
 
@@ -237,9 +348,6 @@ Access to fetch at '...' from origin '...' has been blocked by CORS policy
 **버전**: v1.0
 
 EIBE 사내 매거진 웹사이트 구조 설명서
-�� 개요
-파일명: index.html
-목적: EIBE 사내 매거진 플랫폼 - 실시간 사내 소식, 프로젝트, 조직도, 중요일정 등을 통합 관리하는 웹사이트
 🏗️ 전체 구조
 
 1. HTML5 문서 구조
@@ -261,7 +369,7 @@ EIBE 사내 매거진 웹사이트 구조 설명서
    모바일: < 768px
    태블릿: 768px - 1024px
    데스크톱: > 1024px
-   �� 핵심 기능
+   🏗️ 핵심 기능
 3. 네비게이션 시스템
    Apply to index.html
 4. 아코디언 시스템
@@ -274,7 +382,7 @@ EIBE 사내 매거진 웹사이트 구조 설명서
    Apply to index.html
 7. Swiper 캐러셀 (포토부스)
    Apply to index.html
-   �� 반응형 디자인
+   🏗️ 반응형 디자인
    모바일 최적화
    햄버거 메뉴 (768px 이하)
    터치 친화적 인터페이스
@@ -298,7 +406,7 @@ EIBE 사내 매거진 웹사이트 구조 설명서
     AI 상담포털(ai활용,ojt까지)
     피드백박스:(수집api구축)
     오피스 테트리스: (수집 api구축)
-    �� SEO & 접근성
+    🏗️ SEO & 접근성
     메타 태그
     Open Graph (Facebook/LinkedIn)
     Twitter Card
@@ -309,7 +417,7 @@ EIBE 사내 매거진 웹사이트 구조 설명서
     키보드 네비게이션
     스크린 리더 지원
     색상 대비 최적화
-    🚀 성능 최적화
+    🏗️ 성능 최적화
     이미지 최적화
     Lazy loading
     WebP 포맷 지원
@@ -329,7 +437,7 @@ EIBE 사내 매거진 웹사이트 구조 설명서
     JavaScript: ES6+, 모듈화된 함수
     외부 라이브러리: Swiper, Lottie, Google Apps Script
     호스팅: GitHub Pages
-    �� 확장성
+    🏗️ 확장성
     새 섹션 추가
     HTML 섹션 추가
     네비게이션 메뉴 추가
