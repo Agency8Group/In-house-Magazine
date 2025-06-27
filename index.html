@@ -665,8 +665,13 @@
             .comment-container {
                 height: 300px; /* 데스크톱 기본 높이 */
                 overflow-y: auto;
+                overflow-x: hidden;
                 scrollbar-width: thin;
                 scrollbar-color: #cbd5e1 #f1f5f9;
+                position: relative;
+                -webkit-overflow-scrolling: touch; /* iOS 스크롤 최적화 */
+                overscroll-behavior: contain; /* 스크롤 체이닝 방지 */
+                touch-action: pan-y; /* 세로 스크롤만 허용 */
             }
 
             /* 모바일에서 댓글 컨테이너 높이 조정 */
@@ -674,6 +679,10 @@
                 .comment-container {
                     height: 250px; /* 모바일에서는 더 작게 */
                     -webkit-overflow-scrolling: touch; /* iOS 스크롤 최적화 */
+                    touch-action: pan-y; /* 세로 스크롤만 허용 */
+                    overscroll-behavior: contain; /* 스크롤 체이닝 방지 */
+                    position: relative;
+                    z-index: 1; /* 터치 이벤트 우선순위 */
                 }
             }
 
@@ -681,6 +690,21 @@
             @media (max-width: 480px) {
                 .comment-container {
                     height: 200px; /* 작은 화면에서는 더 작게 */
+                    -webkit-overflow-scrolling: touch;
+                    touch-action: pan-y;
+                    overscroll-behavior: contain;
+                    position: relative;
+                    z-index: 1;
+                }
+            }
+
+            /* 매우 작은 화면 */
+            @media (max-width: 360px) {
+                .comment-container {
+                    height: 180px;
+                    -webkit-overflow-scrolling: touch;
+                    touch-action: pan-y;
+                    overscroll-behavior: contain;
                 }
             }
 
@@ -869,6 +893,9 @@
                 height: 300px; /* 데스크톱 기본 높이 */
                 overflow-y: auto;
                 position: relative;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior: contain;
+                touch-action: pan-y;
             }
 
             /* 모바일에서 가상화 컨테이너 높이 조정 */
@@ -876,12 +903,21 @@
                 .comment-virtual-container {
                     height: 250px;
                     -webkit-overflow-scrolling: touch;
+                    overscroll-behavior: contain;
+                    touch-action: pan-y;
+                    position: relative;
+                    z-index: 1;
                 }
             }
 
             @media (max-width: 480px) {
                 .comment-virtual-container {
                     height: 200px;
+                    -webkit-overflow-scrolling: touch;
+                    overscroll-behavior: contain;
+                    touch-action: pan-y;
+                    position: relative;
+                    z-index: 1;
                 }
             }
 
@@ -966,6 +1002,25 @@
             .dark #refreshComments:disabled {
                 opacity: 0.5;
                 cursor: not-allowed;
+            }
+
+            /* 다크모드에서 댓글 아이템 모바일 터치 최적화 */
+            .comment-item {
+                touch-action: manipulation; /* 터치 최적화 */
+                -webkit-tap-highlight-color: transparent; /* 터치 하이라이트 제거 */
+                user-select: none; /* 텍스트 선택 방지 */
+            }
+
+            .comment-item * {
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            /* 댓글 내부 텍스트는 선택 가능하도록 */
+            .comment-item p,
+            .comment-item span {
+                user-select: text;
+                -webkit-user-select: text;
             }
         </style>
     </head>
