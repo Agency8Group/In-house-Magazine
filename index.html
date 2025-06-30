@@ -2999,6 +2999,89 @@
         </div>
 
         <script>
+            // ===== IP 접근 권한 관리 시스템 =====
+            // 허용된 IP 범위 (전역변수)
+            const ALLOWED_IPS = {
+                // 외부 IP (회사 공인 IP)
+                external: "112.219.220.204",
+                // 내부 네트워크 범위
+                internal: [
+                    "192.168.1.*", // ipv4 192.168.1.*
+                    "192.168.56.*", // ipv4 192.168.56.*
+                    "192.168.10.*", // 기본 게이트웨이 192.168.10.*
+                ],
+            };
+
+            // IP 주소가 허용된 범위에 있는지 확인하는 함수
+            function isIPAllowed(ip) {
+                // 정확한 IP 매칭 (외부 IP)
+                if (ip === ALLOWED_IPS.external) {
+                    return true;
+                }
+
+                // 와일드카드 패턴 매칭 (내부 네트워크)
+                for (let pattern of ALLOWED_IPS.internal) {
+                    if (pattern.endsWith(".*")) {
+                        const prefix = pattern.slice(0, -2); // '*' 제거
+                        if (ip.startsWith(prefix)) {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+
+            // 현재 클라이언트 IP 확인 (실제로는 서버에서 확인해야 함)
+            function getClientIP() {
+                // 실제 환경에서는 서버에서 클라이언트 IP를 전달받아야 함
+                // 여기서는 예시로 로컬 IP를 반환
+                return "192.168.1.100"; // 예시 IP
+            }
+
+            // 접근 권한 확인 및 처리
+            function checkAccessPermission() {
+                const clientIP = getClientIP();
+                const isAllowed = isIPAllowed(clientIP);
+
+                if (!isAllowed) {
+                    // 접근 거부 시 처리
+                    document.body.innerHTML = `
+                        <div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-family: Arial, sans-serif;">
+                            <div style="text-align: center; padding: 2rem; border: 1px solid #ccc; border-radius: 8px;">
+                                <h2 style="color: #e74c3c;">접근 권한이 없습니다</h2>
+                                <p>IP 주소: ${clientIP}</p>
+                                <p>허용된 IP 범위:</p>
+                                <ul style="text-align: left; display: inline-block;">
+                                    <li>${ALLOWED_IPS.external}</li>
+                                    ${ALLOWED_IPS.internal
+                                        .map((ip) => `<li>${ip}</li>`)
+                                        .join("")}
+                                </ul>
+                                <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                                    관리자에게 문의하세요.
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                    return false;
+                }
+
+                // 접근 허용 시 콘솔에 로그 출력
+                console.log(`✅ 접근 허용: ${clientIP}`);
+                return true;
+            }
+
+            // 페이지 로드 시 접근 권한 확인
+            document.addEventListener("DOMContentLoaded", function () {
+                // 접근 권한 확인 (실제 환경에서는 서버에서 처리)
+                // checkAccessPermission();
+
+                // 개발 환경에서는 주석 처리하고, 실제 배포 시 활성화
+                console.log("🔒 IP 접근 권한 시스템이 로드되었습니다.");
+                console.log("허용된 IP 범위:", ALLOWED_IPS);
+            });
+
             // ===== 전역 변수 선언 =====
             const navLinks = document.querySelectorAll("nav a[href^='#']");
             const mainLogo = document.getElementById("mainLogo");
