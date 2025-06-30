@@ -3003,7 +3003,8 @@
             // 허용된 IP 범위 (전역변수)
             const ALLOWED_IPS = {
                 // 외부 IP (회사 공인 IP)
-                external: "112.219.220.204",
+                external: ["112.219.220.204", "112.219.220.203"],
+
                 // 내부 네트워크 범위
                 internal: [
                     "192.168.1.*", // ipv4 192.168.1.*
@@ -3015,7 +3016,7 @@
             // IP 주소가 허용된 범위에 있는지 확인하는 함수
             function isIPAllowed(ip) {
                 // 정확한 IP 매칭 (외부 IP)
-                if (ip === ALLOWED_IPS.external) {
+                if (ALLOWED_IPS.external.includes(ip)) {
                     return true;
                 }
 
