@@ -15,20 +15,20 @@
 ### 1.2 스프레드시트 ID 복사
 
 1. 브라우저 주소창에서 스프레드시트 ID 복사
-    - 예: `https://docs.google.com/spreadsheets/d/`**`1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms`**`/edit`
-    - 굵은 부분이 스프레드시트 ID입니다.
-    - **중요**: 이 ID를 복사해서 나중에 Google Apps Script에서 사용합니다.
+   - 예: `https://docs.google.com/spreadsheets/d/`**`1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms`**`/edit`
+   - 굵은 부분이 스프레드시트 ID입니다.
+   - **중요**: 이 ID를 복사해서 나중에 Google Apps Script에서 사용합니다.
 
 ### 1.3 스프레드시트 구조 확인
 
 스프레드시트에 다음과 같은 열이 자동으로 생성됩니다:
 
--   **A열**: 댓글 ID (자동 생성)
--   **B열**: 작성자 이름
--   **C열**: 댓글 내용
--   **D열**: 작성 시간
--   **E열**: 좋아요 수
--   **F열**: 익명 여부
+- **A열**: 댓글 ID (자동 생성)
+- **B열**: 작성자 이름
+- **C열**: 댓글 내용
+- **D열**: 작성 시간
+- **E열**: 좋아요 수
+- **F열**: 익명 여부
 
 ## 🔧 2단계: Google Apps Script 설정
 
@@ -50,15 +50,15 @@ const SPREADSHEET_ID = "여기에_실제_스프레드시트_ID_입력";
 
 **스프레드시트 ID 찾는 방법:**
 
--   Google Sheets URL: `https://docs.google.com/spreadsheets/d/`**`1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms`**`/edit`
--   굵은 부분을 복사해서 `SPREADSHEET_ID`에 붙여넣기
+- Google Sheets URL: `https://docs.google.com/spreadsheets/d/`**`1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms`**`/edit`
+- 굵은 부분을 복사해서 `SPREADSHEET_ID`에 붙여넣기
 
 **⚠️ 주의사항:**
 
--   **Google Apps Script 웹앱 URL의 ID가 아닙니다!**
--   **실제 Google Sheets의 ID여야 합니다!**
--   웹앱 URL: `https://script.google.com/macros/s/`**`AKfycbw8Ka_UYxBWkSNKxFdcKNsmgJHztIXbs-NvxeOVhBJCNU2zLMtc_OFcZU29ymb6nOXYBg`**`/exec` ← 이건 웹앱 ID
--   스프레드시트 URL: `https://docs.google.com/spreadsheets/d/`**`1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms`**`/edit` ← 이게 스프레드시트 ID
+- **Google Apps Script 웹앱 URL의 ID가 아닙니다!**
+- **실제 Google Sheets의 ID여야 합니다!**
+- 웹앱 URL: `https://script.google.com/macros/s/`**`AKfycbw8Ka_UYxBWkSNKxFdcKNsmgJHztIXbs-NvxeOVhBJCNU2zLMtc_OFcZU29ymb6nOXYBg`**`/exec` ← 이건 웹앱 ID
+- 스프레드시트 URL: `https://docs.google.com/spreadsheets/d/`**`1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms`**`/edit` ← 이게 스프레드시트 ID
 
 **예시:**
 
@@ -71,9 +71,9 @@ const SPREADSHEET_ID = "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms";
 1. "배포" → "새 배포" 클릭
 2. "유형 선택" → "웹 앱" 선택
 3. 설정:
-    - **설명**: "사내매거진 댓글 API v1.0"
-    - **실행 대상**: "나"
-    - **액세스 권한**: "모든 사용자"
+   - **설명**: "사내매거진 댓글 API v1.0"
+   - **실행 대상**: "나"
+   - **액세스 권한**: "모든 사용자"
 4. "배포" 클릭
 5. 권한 승인 (필요시)
 6. **웹 앱 URL 복사** (중요!)
@@ -92,7 +92,7 @@ const GAS_API_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL"; // 이 부분을 실�
 
 ```javascript
 const GAS_API_URL =
-    "https://script.google.com/macros/s/AKfycbz1234567890abcdef/exec";
+  "https://script.google.com/macros/s/AKfycbz1234567890abcdef/exec";
 ```
 
 ## 🧪 4단계: 테스트
@@ -113,13 +113,13 @@ const GAS_API_URL =
 
 ### 5.1 백업 설정
 
--   Apps Script에서 `backupComments` 함수를 수동으로 실행하거나
--   트리거를 설정하여 자동 백업 가능
+- Apps Script에서 `backupComments` 함수를 수동으로 실행하거나
+- 트리거를 설정하여 자동 백업 가능
 
 ### 5.2 데이터 정리
 
--   `cleanupOldComments` 함수로 30일 이상 된 댓글 자동 삭제
--   필요시 기간 조정 가능
+- `cleanupOldComments` 함수로 30일 이상 된 댓글 자동 삭제
+- 필요시 기간 조정 가능
 
 ## 🔒 6단계: 보안 설정
 
@@ -145,9 +145,9 @@ Access to fetch at '...' from origin '...' has been blocked by CORS policy
 
 **해결방법**:
 
--   Apps Script 코드의 CORS 헤더가 올바르게 설정되었는지 확인
--   GET 방식으로 API 호출하도록 변경 (POST 대신)
--   웹앱 재배포 필요
+- Apps Script 코드의 CORS 헤더가 올바르게 설정되었는지 확인
+- GET 방식으로 API 호출하도록 변경 (POST 대신)
+- 웹앱 재배포 필요
 
 #### 2. 스프레드시트 접근 오류
 
@@ -157,18 +157,18 @@ Access to fetch at '...' from origin '...' has been blocked by CORS policy
 
 **해결방법**:
 
--   **스프레드시트 ID가 올바른지 확인** (가장 중요!)
--   웹앱 ID와 스프레드시트 ID를 혼동하지 마세요
--   스프레드시트 공유 설정 확인
--   Apps Script 권한 확인
+- **스프레드시트 ID가 올바른지 확인** (가장 중요!)
+- 웹앱 ID와 스프레드시트 ID를 혼동하지 마세요
+- 스프레드시트 공유 설정 확인
+- Apps Script 권한 확인
 
 #### 3. 댓글이 저장되지 않음
 
 **해결방법**:
 
--   웹 앱 URL이 올바른지 확인
--   브라우저 개발자 도구에서 네트워크 오류 확인
--   Apps Script 로그에서 오류 메시지 확인
+- 웹 앱 URL이 올바른지 확인
+- 브라우저 개발자 도구에서 네트워크 오류 확인
+- Apps Script 로그에서 오류 메시지 확인
 
 ### 디버깅 방법
 
@@ -192,18 +192,18 @@ Access to fetch at '...' from origin '...' has been blocked by CORS policy
 
 ### 1. 캐싱 설정
 
--   댓글 목록을 30초마다 자동 새로고침
--   필요시 간격 조정 가능
+- 댓글 목록을 30초마다 자동 새로고침
+- 필요시 간격 조정 가능
 
 ### 2. 데이터 제한
 
--   최대 4개 댓글만 표시
--   스크롤로 나머지 댓글 확인 가능
+- 최대 4개 댓글만 표시
+- 스크롤로 나머지 댓글 확인 가능
 
 ### 3. 입력 제한
 
--   댓글 내용: 최대 500자
--   작성자 이름: 최대 20자
+- 댓글 내용: 최대 500자
+- 작성자 이름: 최대 20자
 
 ## 🔄 업데이트 및 유지보수
 
@@ -216,9 +216,9 @@ Access to fetch at '...' from origin '...' has been blocked by CORS policy
 
 #### GNK 파일이란?
 
--   **Google Native Key**: Google Apps Script 배포 시 생성되는 실행 파일
--   **고유 식별자**: 각 배포마다 고유한 GNK ID 생성
--   **자동 생성**: 코드 배포 시 Google 서버에서 자동 생성
+- **Google Native Key**: Google Apps Script 배포 시 생성되는 실행 파일
+- **고유 식별자**: 각 배포마다 고유한 GNK ID 생성
+- **자동 생성**: 코드 배포 시 Google 서버에서 자동 생성
 
 #### GNK 파일 삭제 시 대응
 
@@ -240,75 +240,69 @@ Access to fetch at '...' from origin '...' has been blocked by CORS policy
 
 ### 4. 모니터링
 
--   정기적으로 Apps Script 로그 확인
--   스프레드시트 데이터 정리
--   백업 데이터 관리
--   **GNK 파일 상태 확인** (월 1회 권장)
+- 정기적으로 Apps Script 로그 확인
+- 스프레드시트 데이터 정리
+- 백업 데이터 관리
+- **GNK 파일 상태 확인** (월 1회 권장)
 
 ## 📋 GNK 파일 관리 체크리스트
 
 ### ✅ 월간 점검 항목
 
--   [ ] **API 연결 테스트**
+- [ ] **API 연결 테스트**
+  - 웹사이트에서 댓글 작성 테스트
+  - 새로고침 버튼 작동 확인
+  - 좋아요 기능 테스트
 
-    -   웹사이트에서 댓글 작성 테스트
-    -   새로고침 버튼 작동 확인
-    -   좋아요 기능 테스트
+- [ ] **배포 URL 백업**
+  - 현재 배포 URL 기록
+  - 스프레드시트 ID 확인
+  - 백업 날짜 기록
 
--   [ ] **배포 URL 백업**
-
-    -   현재 배포 URL 기록
-    -   스프레드시트 ID 확인
-    -   백업 날짜 기록
-
--   [ ] **로그 확인**
-    -   Google Apps Script 실행 로그 확인
-    -   오류 메시지 확인
-    -   성능 지표 확인
+- [ ] **로그 확인**
+  - Google Apps Script 실행 로그 확인
+  - 오류 메시지 확인
+  - 성능 지표 확인
 
 ### 🚨 긴급 대응 시나리오
 
 #### 시나리오 1: GNK 파일 삭제됨
 
 1. **즉시 재배포**
-
-    - Google Apps Script 편집기 접속
-    - "배포" → "새 배포" 클릭
-    - 새로운 웹앱 URL 복사
+   - Google Apps Script 편집기 접속
+   - "배포" → "새 배포" 클릭
+   - 새로운 웹앱 URL 복사
 
 2. **HTML 파일 업데이트**
-
-    - `index.html`의 `GAS_API_URL` 변경
-    - 새로운 배포 URL 적용
+   - `index.html`의 `GAS_API_URL` 변경
+   - 새로운 배포 URL 적용
 
 3. **테스트**
-    - 댓글 시스템 정상 작동 확인
-    - 모든 기능 테스트
+   - 댓글 시스템 정상 작동 확인
+   - 모든 기능 테스트
 
 #### 시나리오 2: API 응답 없음
 
 1. **원인 진단**
-
-    - 브라우저 개발자 도구에서 네트워크 오류 확인
-    - Google Apps Script 로그 확인
+   - 브라우저 개발자 도구에서 네트워크 오류 확인
+   - Google Apps Script 로그 확인
 
 2. **재배포**
-
-    - 코드 수정 없이 재배포 시도
-    - 새로운 URL로 업데이트
+   - 코드 수정 없이 재배포 시도
+   - 새로운 URL로 업데이트
 
 3. **대안**
-    - 로컬 폴백 모드 활성화
-    - 임시 댓글 시스템 구축
+   - 로컬 폴백 모드 활성화
+   - 임시 댓글 시스템 구축
 
 ### 📊 현재 배포 정보
 
 **최신 배포 정보 (2025-01-26)**
 
--   **배포 ID**: `AKfycbzi8dhqZg0XsJmxfjXM2tWcYFLv-Db0gm4rzEbYb2pRtfvNgc9xu8zBNnyedtgGE0QKzQ`
--   **웹앱 URL**: `https://script.google.com/macros/s/AKfycbzi8dhqZg0XsJmxfjXM2tWcYFLv-Db0gm4rzEbYb2pRtfvNgc9xu8zBNnyedtgGE0QKzQ/exec`
--   **스프레드시트 ID**: `15drNF-KqgiezlVpEjf97GEqmbxLdn4iVrqG3LSnnVdE`
--   **상태**: ✅ 정상 작동
+- **배포 ID**: `AKfycbzi8dhqZg0XsJmxfjXM2tWcYFLv-Db0gm4rzEbYb2pRtfvNgc9xu8zBNnyedtgGE0QKzQ`
+- **웹앱 URL**: `https://script.google.com/macros/s/AKfycbzi8dhqZg0XsJmxfjXM2tWcYFLv-Db0gm4rzEbYb2pRtfvNgc9xu8zBNnyedtgGE0QKzQ/exec`
+- **스프레드시트 ID**: `15drNF-KqgiezlVpEjf97GEqmbxLdn4iVrqG3LSnnVdE`
+- **상태**: ✅ 정상 작동
 
 ### 🔧 유지보수 도구
 
@@ -317,30 +311,30 @@ Access to fetch at '...' from origin '...' has been blocked by CORS policy
 ```javascript
 // 브라우저 콘솔에서 실행
 fetch(
-    "https://script.google.com/macros/s/AKfycbzi8dhqZg0XsJmxfjXM2tWcYFLv-Db0gm4rzEbYb2pRtfvNgc9xu8zBNnyedtgGE0QKzQ/exec?action=get"
+  "https://script.google.com/macros/s/AKfycbzi8dhqZg0XsJmxfjXM2tWcYFLv-Db0gm4rzEbYb2pRtfvNgc9xu8zBNnyedtgGE0QKzQ/exec?action=get",
 )
-    .then((response) => response.json())
-    .then((data) => console.log("API 상태:", data))
-    .catch((error) => console.error("API 오류:", error));
+  .then((response) => response.json())
+  .then((data) => console.log("API 상태:", data))
+  .catch((error) => console.error("API 오류:", error));
 ```
 
 #### 2. 스프레드시트 연결 확인
 
--   Google Sheets 직접 접속
--   "Comments" 시트 데이터 확인
--   최신 댓글 데이터 확인
+- Google Sheets 직접 접속
+- "Comments" 시트 데이터 확인
+- 최신 댓글 데이터 확인
 
 #### 3. 로그 모니터링
 
--   Google Apps Script 편집기 → "실행" → "실행 로그"
--   오류 메시지 및 성능 지표 확인
+- Google Apps Script 편집기 → "실행" → "실행 로그"
+- 오류 메시지 및 성능 지표 확인
 
 ## 📞 지원
 
 문제가 발생하거나 추가 도움이 필요한 경우:
 
--   전략기획실 지윤환 사원에게 문의
--   이메일: jyh@eibe.co.kr
+- 전략기획실 지윤환 사원에게 문의
+- 이메일: jyh@eibe.co.kr
 
 ---
 
